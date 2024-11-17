@@ -41,12 +41,12 @@ export default function Login({
         <div className=" w-full h-screen bg-muted">
             <Head title="Log in" />
             <div className="h-full flex items-center justify-center">
-                <Card className="w-[420px] ">
+                <Card className="min-w-[300px] w-[320px] md:w-[400px] lg:w-[500px]">
                     <CardHeader>
                         <img
                             className="size-64 mx-auto"
                             src="https://iro.umy.ac.id/wp-content/uploads/2021/12/Logo-Uin-Sunan-Kalijaga-300x300.png"
-                            alt=""
+                            alt="uin-suka-logo"
                         />
                     </CardHeader>
                     <CardContent>
