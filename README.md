@@ -9,7 +9,7 @@
 
 ## Cara menjalankan projek
 
-Ikuti Langkah berikut:
+Ikuti Langkah-langkah sebagai berikut:
 
 -   pastikan udah nginstall `composer` dan `PHP` versi `8.2` keatas yakali mau pakai laravel belum terinstal php 🗿.
 -   jangan lupa juga udh terinstal `nodejs` soalnya bagian fe nya pakai `react`.
