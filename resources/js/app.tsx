@@ -8,7 +8,10 @@ import { createRoot } from "react-dom/client";
 const appName = import.meta.env.VITE_APP_NAME || "Risk Management System";
 
 createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title) =>
+        title
+            ? `${title} - Risk Management System`
+            : `${appName} - Risk Management System`,
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.tsx`,
