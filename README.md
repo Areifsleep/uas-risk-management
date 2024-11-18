@@ -27,7 +27,7 @@ Ikuti Langkah-langkah sebagai berikut:
 
 banyak 🗿 antara lain :
 
-cooming soon
+cooming soon!!!
 
 <!-- You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
