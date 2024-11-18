@@ -1,42 +1,15 @@
-import { Head, Link } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 import { FaGithub } from "react-icons/fa6";
 
 import { Button } from "@/Components/ui/button";
 import { PageProps } from "@/types";
-
-const anggotaKelompok = [
-    {
-        name: "Arif Rahman",
-        nim: "23106050050",
-        university: "UIN Sunan Kalijaga",
-        image: "https://randomuser.me/api/portraits/lego/7.jpg",
-    },
-    {
-        name: "Ahmad Zidni Hidayat",
-        nim: "23106050077",
-        university: "UIN Sunan Kalijaga",
-        image: "https://randomuser.me/api/portraits/lego/7.jpg",
-    },
-    {
-        name: "Rozin Gunagraha",
-        nim: "23106050084",
-        university: "UIN Sunan Kalijaga",
-        image: "https://randomuser.me/api/portraits/lego/7.jpg",
-    },
-    {
-        name: "Syafiq Rustiawanto",
-        nim: "23106050094",
-        university: "UIN Sunan Kalijaga",
-        image: "https://randomuser.me/api/portraits/lego/7.jpg",
-    },
-];
+import { anggotaKelompok } from "@/features/LandingPage/Constant";
 
 export default function LandingPage({
     auth,
 }: PageProps<{ laravelVersion: string; phpVersion: string }>) {
     return (
         <>
-            <Head title="EduRisk" />
             <header className="h-14 w-full sticky top-0 z-50 flex items-center bg-background">
                 <div className="px-2 xl:px-0 max-w-[1400px] w-full mx-auto flex justify-between items-center">
                     <div className="flex gap-x-2">
@@ -46,7 +19,7 @@ export default function LandingPage({
                             alt="app-logo"
                         />
                         <Link href="/">
-                            <span className="font-bold text-xl">EduRisk</span>
+                            <span className="font-bold text-xl">Masako</span>
                         </Link>
                     </div>
                     <div className="flex gap-x-5 text-sm md:text-md">
@@ -150,7 +123,7 @@ export default function LandingPage({
                 <div className="max-w-[1400px] h-full mx-auto flex items-center justify-center border-t">
                     <p>
                         &copy; {new Date().getFullYear()} by{" "}
-                        <span className="font-bold">EduRisk</span> team
+                        <span className="font-bold">Masako</span> team
                     </p>
                 </div>
             </footer>

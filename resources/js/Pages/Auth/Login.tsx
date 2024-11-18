@@ -15,6 +15,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/Components/ui/card";
+import { ButtonWithLogo } from "@/Components/ButtonWithLogo";
 
 export default function Login({
     status,
@@ -125,17 +126,12 @@ export default function Login({
                                 </div>
 
                                 <div className="mt-4">
-                                    <Button
-                                        className="w-full items-center justify-center gap-1"
+                                    <ButtonWithLogo
+                                        className="w-full"
                                         disabled={processing}
                                     >
-                                        <img
-                                            src="https://static.uin-suka.ac.id/images/ico-hover.png"
-                                            alt="button-icon"
-                                            className="size-4"
-                                        />
                                         Log in
-                                    </Button>
+                                    </ButtonWithLogo>
                                 </div>
                             </form>
                         </div>
@@ -143,7 +139,7 @@ export default function Login({
                     <CardFooter>
                         <p className="text-center w-full text-muted-foreground text-sm font-semibold">
                             &copy; {new Date().getFullYear()} by
-                            <span className="font-bold">EduRisk</span> team
+                            <span className="font-bold"> Masako</span> team
                         </p>
                     </CardFooter>
                 </Card>
