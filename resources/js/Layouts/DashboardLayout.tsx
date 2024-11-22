@@ -7,7 +7,7 @@ interface DashboardLayoutProps extends PropsWithChildren {}
 export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     return (
         <div className="bg-muted w-full min-h-screen">
-            <div className="max-w-screen-xl mx-auto">
+            <div className="max-w-screen-xl mx-auto px-5">
                 <DashboardNavbar />
                 {children}
                 <footer className="border-t mt-10">
