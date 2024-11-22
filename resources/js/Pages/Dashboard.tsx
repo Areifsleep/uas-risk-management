@@ -60,20 +60,20 @@ export default function Dashboard() {
                 <p className="text-3xl font-bold">Good Morning</p>
             </div>
             <div className="pt-5 grid grid-cols-12 gap-3 items-center">
-                <Card className="w-full h-[450px] col-span-6">
+                <Card className="w-full h-[450px] col-span-12 md:col-span-8">
                     <CardHeader>
                         <CardTitle>Grafik Probabilitas</CardTitle>
                     </CardHeader>
                     <CardContent></CardContent>
                     <CardFooter className="flex justify-between"></CardFooter>
                 </Card>
-                <div className="w-full col-span-6">
-                    <div className="grid grid-cols-2 gap-2">
+                <div className="w-full col-span-12 md:col-span-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <Card className="w-full h-[calc((450px/2)-8px)] p-3">
                             Jumlah Fakultas
                         </Card>
                         <Card className="w-full h-[calc((450px/2)-8px)] p-3">
-                            Jumlah...
+                            Jumlah Departemen
                         </Card>
                         <Card className="w-full h-[calc((450px/2)-8px)] p-3">
                             Jumlah Resiko Yang Perlu di Review
