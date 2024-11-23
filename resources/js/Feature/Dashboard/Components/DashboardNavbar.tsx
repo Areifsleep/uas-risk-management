@@ -11,12 +11,6 @@ export const DashboardNavbar = () => {
         <div className="flex justify-between py-5 items-center">
             <ApplicationLogo />
             <div className="flex items-center">
-                <Button
-                    variant="ghost"
-                    className="bg-background rounded-full size-9 hover:bg-background/80"
-                >
-                    <CiBellOn />
-                </Button>
                 <div className="hidden ms-3 sm:flex sm:items-center">
                     <div className="relative">
                         <Dropdown>

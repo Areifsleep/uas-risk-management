@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import { FaGithub } from "react-icons/fa6";
 
 import { Button } from "@/Components/ui/button";
@@ -11,6 +11,7 @@ export default function LandingPage({
 }: PageProps<{ laravelVersion: string; phpVersion: string }>) {
     return (
         <>
+            <Head title="Masako" />
             <header className="h-14 w-full sticky top-0 z-50 flex items-center bg-background">
                 <div className="px-2 xl:px-0 max-w-[1400px] w-full mx-auto flex justify-between items-center">
                     <ApplicationLogo />
