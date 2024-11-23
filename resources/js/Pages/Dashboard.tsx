@@ -11,6 +11,8 @@ import {
 } from "@/Components/ui/card";
 import { columns, type Payment } from "./Columns";
 import { DataTable } from "./DataTable";
+import { createGreetingMessage } from "@/lib/utils";
+import RiskMatrixCanvas from "@/RiskMatrixCanvas";
 
 function getData(): Payment[] {
     // Fetch data from your API here.
@@ -56,27 +58,25 @@ export default function Dashboard() {
         <DashboardLayout>
             <Head title="Dashboard" />
             <div>
-                <span className="font font-semibold">Hello admin,</span>
-                <p className="text-3xl font-bold">Good Morning</p>
+                <span className="font font-semibold">
+                    Hello {props.auth.user.name},
+                </span>
+                <p className="text-3xl font-bold">{createGreetingMessage()}</p>
             </div>
             <div className="pt-5 grid grid-cols-12 gap-3 items-center">
-                <Card className="w-full h-[450px] col-span-12 md:col-span-8">
-                    <CardHeader>
-                        <CardTitle>Grafik Probabilitas</CardTitle>
-                    </CardHeader>
-                    <CardContent></CardContent>
-                    <CardFooter className="flex justify-between"></CardFooter>
+                <Card className="w-full h-[450px] overflow-hidden col-span-12 md:col-span-7">
+                    <RiskMatrixCanvas />
                 </Card>
-                <div className="w-full col-span-12 md:col-span-4">
+                <div className="w-full col-span-12 md:col-span-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <Card className="w-full h-[calc((450px/2)-8px)] p-3">
                             Jumlah Fakultas
                         </Card>
                         <Card className="w-full h-[calc((450px/2)-8px)] p-3">
-                            Jumlah Departemen
+                            Jumlah Program Studi
                         </Card>
                         <Card className="w-full h-[calc((450px/2)-8px)] p-3">
-                            Jumlah Resiko Yang Perlu di Review
+                            Jumlah Users
                         </Card>
                         <Card className="w-full h-[calc((450px/2)-8px)] p-3">
                             Jumlah Resiko Yang Disetujui
