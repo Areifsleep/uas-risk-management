@@ -58,35 +58,54 @@ export default function Dashboard() {
         <DashboardLayout>
             <Head title="Dashboard" />
             <div>
-                <span className="font font-semibold">
-                    Hello {props.auth.user.name},
-                </span>
-                <p className="text-3xl font-bold">{createGreetingMessage()}</p>
+                <p className="text-3xl font-bold capitalize">
+                    {createGreetingMessage(props.auth.user.name)}
+                </p>
             </div>
             <div className="pt-5 grid grid-cols-12 gap-3 items-center">
-                <Card className="w-full h-[450px] overflow-hidden col-span-12 md:col-span-7">
-                    <RiskMatrixCanvas />
-                </Card>
-                <div className="w-full col-span-12 md:col-span-5">
+                <div className="w-full col-span-12 lg:col-span-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <Card className="w-full h-[calc((450px/2)-8px)] p-3">
-                            Jumlah Fakultas
+                        <Card className="w-full h-[calc((450px/2)-8px)] flex-col flex p-3">
+                            <div className="py-2.5 border-b">
+                                Jumlah Fakultas
+                            </div>
+                            <div className="flex items-center justify-center h-full">
+                                <span className="text-6xl font-bold">10</span>
+                            </div>
                         </Card>
-                        <Card className="w-full h-[calc((450px/2)-8px)] p-3">
-                            Jumlah Program Studi
+                        <Card className="w-full h-[calc((450px/2)-8px)] flex-col flex p-3">
+                            <div className="py-2.5 border-b">
+                                Jumlah Program Studi
+                            </div>
+                            <div className="flex items-center justify-center h-full">
+                                <span className="text-6xl font-bold">10</span>
+                            </div>
                         </Card>
-                        <Card className="w-full h-[calc((450px/2)-8px)] p-3">
-                            Jumlah Users
+                        <Card className="w-full h-[calc((450px/2)-8px)] flex-col flex p-3">
+                            <div className="py-2.5 border-b">Jumlah Users</div>
+                            <div className="flex items-center justify-center h-full">
+                                <span className="text-6xl font-bold">10</span>
+                            </div>
                         </Card>
-                        <Card className="w-full h-[calc((450px/2)-8px)] p-3">
-                            Jumlah Resiko Yang Disetujui
+                        <Card className="w-full h-[calc((450px/2)-8px)] flex-col flex p-3">
+                            <div className="py-2.5 border-b">
+                                Jumlah Resiko Yang Disetujui
+                            </div>
+                            <div className="flex items-center justify-center h-full">
+                                <span className="text-6xl font-bold">10</span>
+                            </div>
                         </Card>
                     </div>
                 </div>
+                <Card className="w-full h-[450px] overflow-hidden col-span-12 lg:col-span-7">
+                    <RiskMatrixCanvas />
+                </Card>
             </div>
             <div className="pt-5">
                 <Card className="w-full px-3.5 py-4">
-                    Data Table
+                    <CardTitle className="text-xl mb-3">
+                        Daftar Resiko Terbaru
+                    </CardTitle>
                     <DataTable columns={columns} data={data} />
                 </Card>
             </div>

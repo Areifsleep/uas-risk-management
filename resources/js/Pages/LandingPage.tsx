@@ -95,7 +95,7 @@ export default function LandingPage({
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:grid-cols-4 my-10 max-w-[1400px] mx-auto">
                         {anggotaKelompok.map((anggota) => (
-                            <div className="space-y-2">
+                            <div className="space-y-2" key={anggota.nim}>
                                 <img
                                     className="size-64 mx-auto rounded-full aspect-square border-2 border-primary"
                                     src="https://asset.kompas.com/crops/ifW7Xih6xKcXa6cFH3V-JjO_rWA=/164x26:1193x712/750x500/data/photo/2022/10/17/634d7264eeb1a.png"

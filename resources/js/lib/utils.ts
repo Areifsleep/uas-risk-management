@@ -5,14 +5,18 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-export function createGreetingMessage() {
+export function createGreetingMessage(name: string) {
     const hour = new Date().getHours();
 
+    let greeting = "Selamat Pagi";
+
     if (hour < 12) {
-        return "Good morning";
+        greeting = "Selamat Pagi";
     } else if (hour < 18) {
-        return "Good afternoon";
+        greeting = "Selamat Siang";
     } else {
-        return "Good evening";
+        greeting = "Selamat Malam";
     }
+
+    return `${greeting}, ${name}`;
 }
