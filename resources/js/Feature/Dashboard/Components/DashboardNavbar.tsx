@@ -6,6 +6,7 @@ import { CiBellOn } from "react-icons/ci";
 
 export const DashboardNavbar = () => {
     const user = usePage().props.auth.user;
+    console.log(user);
 
     return (
         <div className="flex justify-between py-5 items-center">
@@ -22,7 +23,7 @@ export const DashboardNavbar = () => {
                                     >
                                         <div className="overflow-hidden w-20">
                                             <span className="line-clamp-1">
-                                                {user.name}
+                                                {user?.name}
                                             </span>
                                         </div>
                                         <svg
