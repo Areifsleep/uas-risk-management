@@ -13,7 +13,7 @@ export default function LandingPage({
         <>
             <Head title="Masako" />
             <header className="h-14 w-full sticky top-0 z-50 flex items-center bg-background">
-                <div className="px-2 xl:px-0 max-w-[1400px] w-full mx-auto flex justify-between items-center">
+                <div className="px-5 container w-full mx-auto flex justify-between items-center">
                     <ApplicationLogo />
                     <div className="flex gap-x-5 text-sm md:text-md">
                         <nav>
@@ -59,12 +59,12 @@ export default function LandingPage({
                 <div className="bg-muted w-full  space-y-10 ">
                     <div className="max-w-[1400px] mx-auto flex justify-center items-center">
                         <div className="max-w-[768px] text-center py-32">
-                            <h1 className="text-6xl font-extrabold leading-tight">
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
                                 Risk Management Simplified for Your Campus
                                 Success
                             </h1>
                             <div className="max-w-md mx-auto">
-                                <p className="text-sm text-muted-foreground">
+                                <p className="text-xs md:text-sm lg:text-base text-muted-foreground">
                                     Lorem ipsum dolor sit amet consectetur
                                     adipisicing elit. Quisquam, provident omnis
                                     assumenda, veniam sint quod iusto voluptates
