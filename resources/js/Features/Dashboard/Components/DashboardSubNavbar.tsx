@@ -1,46 +1,46 @@
-import { useState } from "react";
+import NavLink from "@/Components/NavLink";
 
 const menus = [
     {
         id: 1,
         name: "Dashboard",
+        href: "dashboard",
     },
     {
         id: 2,
-        name: "Identifikasi",
+        name: "Risiko",
+        href: "risks.index",
     },
     {
         id: 3,
-        name: "Mitigasi",
+        name: "Identifikasi",
+        href: "identifications.index",
     },
     {
         id: 4,
+        name: "Mitigasi",
+        href: "mitigations.index",
+    },
+    {
+        id: 5,
         name: "Monitoring",
+        href: "monitoring.index",
     },
 ];
 
 export const DashboardSubNavbar = () => {
-    const [activeTab, setActiveTab] = useState("Dashboard");
-
-    const handleTabClick = (tab: string) => {
-        setActiveTab(tab);
-    };
     return (
         <div className="container sticky top-[80px] pt-3.5 pb-2 bg-white">
             <div className="flex justify-between border-b border-gray-200">
                 <div className="flex">
                     {menus.map((menu) => (
-                        <div
+                        <NavLink
                             key={menu.id}
-                            className={`px-4 py-2 cursor-pointer ${
-                                activeTab === menu.name
-                                    ? "border-b-2 border-blue-500 text-blue-500"
-                                    : "text-gray-500 hover:text-gray-800"
-                            }`}
-                            onClick={() => handleTabClick(menu.name)}
+                            href={route(menu.href as string)}
+                            active={route().current(menu.href as string)}
                         >
                             {menu.name}
-                        </div>
+                        </NavLink>
                     ))}
                 </div>
             </div>
