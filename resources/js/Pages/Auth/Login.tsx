@@ -1,21 +1,12 @@
 import Checkbox from "@/Components/Checkbox";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { Button } from "@/Components/ui/button";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/Components/ui/card";
 import { ButtonWithLogo } from "@/Components/ButtonWithLogo";
+import ApplicationLogo from "@/Components/ApplicationLogo";
 
 export default function Login({
     status,
@@ -39,18 +30,28 @@ export default function Login({
     };
 
     return (
-        <div className=" w-full h-screen bg-muted">
-            <Head title="Log in" />
-            <div className="h-full flex items-center justify-center">
-                <Card className="min-w-[300px] w-[320px] md:w-[400px] lg:w-[500px]">
-                    <CardHeader>
-                        <img
-                            className="size-64 mx-auto"
-                            src="https://iro.umy.ac.id/wp-content/uploads/2021/12/Logo-Uin-Sunan-Kalijaga-300x300.png"
-                            alt="uin-suka-logo"
-                        />
-                    </CardHeader>
-                    <CardContent>
+        <>
+            <Head title="Log in">
+                <link
+                    rel="preload"
+                    href="images/vector-login.webp"
+                    as="image"
+                />
+            </Head>
+            <div className=" w-full h-screen bg-muted grid grid-cols-1 lg:grid-cols-2">
+                <div className="flex h-full items-center justify-center">
+                    <div className="p-5 space-y-11">
+                        <ApplicationLogo />
+                        <div>
+                            <h1 className="text-4xl font-extrabold">Hallo,</h1>
+                            <h2 className="text-4xl font-extrabold">
+                                Selamat Datang Kembali
+                            </h2>
+                            <p className="mt-3 text-muted-foreground text-sm">
+                                Kelola Risiko dengan Bijak, Wujudkan Kesuksesan!
+                            </p>
+                        </div>
+
                         <div>
                             {status && (
                                 <div className="mb-4 text-sm font-medium text-green-600">
@@ -126,24 +127,23 @@ export default function Login({
                                 </div>
 
                                 <div className="mt-4">
-                                    <ButtonWithLogo
-                                        className="w-full"
-                                        disabled={processing}
-                                    >
+                                    <ButtonWithLogo disabled={processing}>
                                         Log in
                                     </ButtonWithLogo>
                                 </div>
                             </form>
                         </div>
-                    </CardContent>
-                    <CardFooter>
-                        <p className="text-center w-full text-muted-foreground text-sm font-semibold">
-                            &copy; {new Date().getFullYear()} by
-                            <span className="font-bold"> Masako</span> team
-                        </p>
-                    </CardFooter>
-                </Card>
+                    </div>
+                </div>
+                <div className="p-2 hidden lg:block">
+                    <img
+                        loading="eager"
+                        className="rounded-lg h-full"
+                        src="/images/vector-login.webp"
+                        alt="tes"
+                    />
+                </div>
             </div>
-        </div>
+        </>
     );
 }
