@@ -135,10 +135,10 @@ export default function Login({
                         </div>
                     </div>
                 </div>
-                <div className="p-2 hidden lg:block">
+                <div className="hidden lg:block">
                     <img
                         loading="eager"
-                        className="rounded-lg h-full"
+                        className="h-full "
                         src="/images/vector-login.webp"
                         alt="tes"
                     />
