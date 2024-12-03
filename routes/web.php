@@ -5,6 +5,7 @@ use App\Http\Controllers\MitigationsController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -29,6 +30,10 @@ Route::middleware(["auth","role:admin|rektor|dekan|kaprodi"])->group(function ()
     Route::get('/identifications', [IdentificationsController::class, 'index'])->name('identifications.index');
     Route::get('/mitigations', [MitigationsController::class, 'index'])->name('mitigations.index');
     Route::get('/monitoring', [MonitoringController::class, 'index'])->name('monitoring.index');
+});
+
+Route::middleware(["auth","role:admin"])->group(function () {
+    Route::get("/users", [UserController::class, 'index'])->name('users.index');
 });
 
 Route::middleware('auth')->group(function () {

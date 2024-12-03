@@ -15,7 +15,7 @@ export default function LandingPage({
             <header className="h-14 w-full sticky top-0 z-50 flex items-center bg-background">
                 <div className="px-5 container w-full mx-auto flex justify-between items-center">
                     <ApplicationLogo />
-                    <div className="flex gap-x-5 text-sm md:text-md">
+                    <div className="flex gap-x-5 text-sm md:text-md items-center">
                         <nav>
                             <a
                                 href="#"
@@ -41,17 +41,30 @@ export default function LandingPage({
                                 About project
                             </a>
                         </nav>
-                    </div>
-                    <div>
-                        <Button asChild>
-                            <a
-                                target="_blank"
-                                href="https://github.com/Areifsleep/uas-risk-management"
-                            >
-                                <FaGithub className="size-6" />
-                                <span className="hidden md:block">Github</span>
-                            </a>
-                        </Button>
+
+                        {auth.user ? (
+                            <nav>
+                                <Button
+                                    asChild
+                                    className="hidden lg:flex bg-sky-500 hover:bg-sky-500/90"
+                                    size="sm"
+                                >
+                                    <Link href={route("dashboard")}>
+                                        Dashboard
+                                    </Link>
+                                </Button>
+                            </nav>
+                        ) : (
+                            <nav>
+                                <Button
+                                    asChild
+                                    className="hidden lg:flex bg-sky-500 hover:bg-sky-500/90"
+                                    size="sm"
+                                >
+                                    <Link href={route("login")}>Login</Link>
+                                </Button>
+                            </nav>
+                        )}
                     </div>
                 </div>
             </header>
