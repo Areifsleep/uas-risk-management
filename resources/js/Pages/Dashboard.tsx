@@ -1,57 +1,66 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { DashboardLayout } from "@/Layouts/DashboardLayout";
 import { Head, usePage } from "@inertiajs/react";
 
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/Components/ui/card";
-import { columns, type Payment } from "./Columns";
-import { DataTable } from "./DataTable";
+import { Card, CardTitle } from "@/Components/ui/card";
 import { createGreetingMessage } from "@/lib/utils";
 import RiskMatrixCanvas from "@/RiskMatrixCanvas";
 
-function getData(): Payment[] {
-    // Fetch data from your API here.
-    return [
-        {
-            id: "m5gr84i9",
-            amount: 316,
-            status: "success",
-            email: "ken99@yahoo.com",
-        },
-        {
-            id: "3u1reuv4",
-            amount: 242,
-            status: "success",
-            email: "Abe45@gmail.com",
-        },
-        {
-            id: "derv1ws0",
-            amount: 837,
-            status: "processing",
-            email: "Monserrat44@gmail.com",
-        },
-        {
-            id: "5kma53ae",
-            amount: 874,
-            status: "success",
-            email: "Silas22@gmail.com",
-        },
-        {
-            id: "bhqecj4p",
-            amount: 721,
-            status: "failed",
-            email: "carmella@hotmail.com",
-        },
-    ];
-}
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/Components/ui/table";
+
+const invoices = [
+    {
+        invoice: "INV001",
+        paymentStatus: "Paid",
+        totalAmount: "$250.00",
+        paymentMethod: "Credit Card",
+    },
+    {
+        invoice: "INV002",
+        paymentStatus: "Pending",
+        totalAmount: "$150.00",
+        paymentMethod: "PayPal",
+    },
+    {
+        invoice: "INV003",
+        paymentStatus: "Unpaid",
+        totalAmount: "$350.00",
+        paymentMethod: "Bank Transfer",
+    },
+    {
+        invoice: "INV004",
+        paymentStatus: "Paid",
+        totalAmount: "$450.00",
+        paymentMethod: "Credit Card",
+    },
+    {
+        invoice: "INV005",
+        paymentStatus: "Paid",
+        totalAmount: "$550.00",
+        paymentMethod: "PayPal",
+    },
+    {
+        invoice: "INV006",
+        paymentStatus: "Pending",
+        totalAmount: "$200.00",
+        paymentMethod: "Bank Transfer",
+    },
+    {
+        invoice: "INV007",
+        paymentStatus: "Unpaid",
+        totalAmount: "$300.00",
+        paymentMethod: "Credit Card",
+    },
+];
 
 export default function Dashboard() {
-    const data = getData();
     const props = usePage().props;
     console.log(props);
     return (
@@ -106,29 +115,48 @@ export default function Dashboard() {
                     <CardTitle className="text-xl mb-3">
                         Daftar Resiko Terbaru
                     </CardTitle>
-                    <DataTable columns={columns} data={data} />
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="w-[100px]">
+                                    Invoice
+                                </TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead>Method</TableHead>
+                                <TableHead className="text-right">
+                                    Amount
+                                </TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {invoices.map((invoice) => (
+                                <TableRow key={invoice.invoice}>
+                                    <TableCell className="font-medium">
+                                        {invoice.invoice}
+                                    </TableCell>
+                                    <TableCell>
+                                        {invoice.paymentStatus}
+                                    </TableCell>
+                                    <TableCell>
+                                        {invoice.paymentMethod}
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        {invoice.totalAmount}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                        <TableFooter>
+                            <TableRow>
+                                <TableCell colSpan={3}>Total</TableCell>
+                                <TableCell className="text-right">
+                                    $2,500.00
+                                </TableCell>
+                            </TableRow>
+                        </TableFooter>
+                    </Table>
                 </Card>
             </div>
         </DashboardLayout>
-
-        // <AuthenticatedLayout
-        //     header={
-        //         <h2 className="text-xl font-semibold leading-tight text-gray-800">
-        //             Dashboard
-        //         </h2>
-        //     }
-        // >
-        //     <Head title="Dashboard" />
-
-        //     <div className="py-12">
-        //         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        //             <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-        //                 <div className="p-6 text-gray-900">
-        //                     You're logged in!
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </AuthenticatedLayout>
     );
 }
