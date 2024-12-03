@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\FakultasController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\IdentificationsController;
 use App\Http\Controllers\MitigationsController;
 use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiskController;
-use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -33,7 +34,9 @@ Route::middleware(["auth","role:admin|rektor|dekan|kaprodi"])->group(function ()
 });
 
 Route::middleware(["auth","role:admin"])->group(function () {
-    Route::get("/users", [UserController::class, 'index'])->name('users.index');
+    Route::get("/admin", fn() => to_route('users.index'));
+    Route::get("/admin/users", [UserController::class, 'index'])->name('users.index');
+    Route::get("/admin/fakultas", [FakultasController::class, 'index'])->name('fakultas.index');
 });
 
 Route::middleware('auth')->group(function () {

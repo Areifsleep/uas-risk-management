@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -11,7 +13,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return "Hanya admin yang bisa mengakses halaman ini";
+        return Inertia::render('Admin/Users/UserPage');
     }
 
     /**

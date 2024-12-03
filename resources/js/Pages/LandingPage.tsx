@@ -1,5 +1,4 @@
 import { Head, Link } from "@inertiajs/react";
-import { FaGithub } from "react-icons/fa6";
 
 import { Button } from "@/Components/ui/button";
 import { PageProps } from "@/types";

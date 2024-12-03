@@ -1,5 +1,5 @@
 import { DashboardLayout } from "@/Layouts/DashboardLayout";
-import { Head, usePage } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { createGreetingMessage } from "@/lib/utils";
@@ -9,11 +9,13 @@ import {
     Table,
     TableBody,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/Components/ui/table";
+import { hasRole } from "@/utils/HasRole";
+import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
+import { Bell, Terminal } from "lucide-react";
 
 const riskData = [
     {
@@ -65,7 +67,6 @@ const riskData = [
 
 export default function Dashboard() {
     const props = usePage().props;
-    console.log(props);
     return (
         <DashboardLayout>
             <Head title="Dashboard" />
@@ -74,6 +75,22 @@ export default function Dashboard() {
                     {createGreetingMessage(props.auth.user.name)}
                 </p>
             </div>
+            {hasRole("admin") && (
+                <Alert variant="info" className="mt-5">
+                    <Bell className="h-4 w-4" />
+                    <AlertTitle>Anda Adalah Admin</AlertTitle>
+                    <AlertDescription>
+                        Pergi ke halaman{" "}
+                        <Link
+                            href="/admin"
+                            className="hover:underline font-bold"
+                        >
+                            Admin
+                        </Link>{" "}
+                        untuk mengelola data
+                    </AlertDescription>
+                </Alert>
+            )}
             <div className="pt-5 grid grid-cols-12 gap-3 items-center">
                 <div className="w-full col-span-12 lg:col-span-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
