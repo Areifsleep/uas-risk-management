@@ -12,6 +12,7 @@ class RiskController extends Controller
      */
     public function index()
     {
+        // TODO: Fetch data from database
         return Inertia::render('Risks/Index');
     }
 
@@ -36,7 +37,16 @@ class RiskController extends Controller
      */
     public function show(string $id)
     {
-        //
+
+        // TODO: Fetch data from database
+
+        return Inertia::render('Risks/Show', [
+            'risk' => [
+                'id' => $id,
+                'name' => 'Risk Name',
+                'description' => 'Risk Description',
+            ],
+        ]);
     }
 
     /**

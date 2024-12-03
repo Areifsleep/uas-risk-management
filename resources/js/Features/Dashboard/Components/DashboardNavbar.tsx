@@ -3,7 +3,7 @@ import { UserButton } from "@/Features/Auth/Components/UserButton";
 
 export const DashboardNavbar = () => {
     return (
-        <header className="bg-muted fixed w-full top-0">
+        <header className="bg-muted fixed w-full top-0 z-50">
             <div className="container px-5 w-full flex justify-between py-5 items-center">
                 <ApplicationLogo />
                 <div className="flex items-center">

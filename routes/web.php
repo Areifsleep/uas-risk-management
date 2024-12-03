@@ -22,7 +22,10 @@ Route::middleware(["auth","role:admin|rektor|dekan|kaprodi"])->group(function ()
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
+
     Route::get('/risks', [RiskController::class, 'index'])->name('risks.index');
+    Route::get('/risks/{id}', [RiskController::class, 'show'])->name('risks.show');
+
     Route::get('/identifications', [IdentificationsController::class, 'index'])->name('identifications.index');
     Route::get('/mitigations', [MitigationsController::class, 'index'])->name('mitigations.index');
     Route::get('/monitoring', [MonitoringController::class, 'index'])->name('monitoring.index');
