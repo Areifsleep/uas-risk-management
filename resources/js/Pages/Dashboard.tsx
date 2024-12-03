@@ -1,7 +1,7 @@
 import { DashboardLayout } from "@/Layouts/DashboardLayout";
 import { Head, usePage } from "@inertiajs/react";
 
-import { Card, CardTitle } from "@/Components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { createGreetingMessage } from "@/lib/utils";
 import RiskMatrixCanvas from "@/RiskMatrixCanvas";
 
@@ -15,48 +15,51 @@ import {
     TableRow,
 } from "@/Components/ui/table";
 
-const invoices = [
+const riskData = [
     {
-        invoice: "INV001",
-        paymentStatus: "Paid",
-        totalAmount: "$250.00",
-        paymentMethod: "Credit Card",
+        id: 1,
+        name: "Ac Mati",
+        description: "Panas Cik",
+        owner: "FST",
+        likelihood: 4,
+        impact: 4,
+        riskLevel: 4,
     },
     {
-        invoice: "INV002",
-        paymentStatus: "Pending",
-        totalAmount: "$150.00",
-        paymentMethod: "PayPal",
+        id: 2,
+        name: "Server Down",
+        description: "Layanan Terganggu",
+        owner: "IT",
+        likelihood: 3,
+        impact: 5,
+        riskLevel: 5,
     },
     {
-        invoice: "INV003",
-        paymentStatus: "Unpaid",
-        totalAmount: "$350.00",
-        paymentMethod: "Bank Transfer",
+        id: 3,
+        name: "Data Breach",
+        description: "Kebocoran Informasi",
+        owner: "Security",
+        likelihood: 2,
+        impact: 5,
+        riskLevel: 4,
     },
     {
-        invoice: "INV004",
-        paymentStatus: "Paid",
-        totalAmount: "$450.00",
-        paymentMethod: "Credit Card",
+        id: 4,
+        name: "Budget Overrun",
+        description: "Pengeluaran Melebihi Anggaran",
+        owner: "Finance",
+        likelihood: 3,
+        impact: 3,
+        riskLevel: 3,
     },
     {
-        invoice: "INV005",
-        paymentStatus: "Paid",
-        totalAmount: "$550.00",
-        paymentMethod: "PayPal",
-    },
-    {
-        invoice: "INV006",
-        paymentStatus: "Pending",
-        totalAmount: "$200.00",
-        paymentMethod: "Bank Transfer",
-    },
-    {
-        invoice: "INV007",
-        paymentStatus: "Unpaid",
-        totalAmount: "$300.00",
-        paymentMethod: "Credit Card",
+        id: 5,
+        name: "Staff Shortage",
+        description: "Kekurangan Personel",
+        owner: "HR",
+        likelihood: 2,
+        impact: 4,
+        riskLevel: 3,
     },
 ];
 
@@ -111,50 +114,52 @@ export default function Dashboard() {
                 </Card>
             </div>
             <div className="pt-5">
-                <Card className="w-full px-3.5 py-4">
-                    <CardTitle className="text-xl mb-3">
-                        Daftar Resiko Terbaru
-                    </CardTitle>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead className="w-[100px]">
-                                    Invoice
-                                </TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead>Method</TableHead>
-                                <TableHead className="text-right">
-                                    Amount
-                                </TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {invoices.map((invoice) => (
-                                <TableRow key={invoice.invoice}>
-                                    <TableCell className="font-medium">
-                                        {invoice.invoice}
-                                    </TableCell>
-                                    <TableCell>
-                                        {invoice.paymentStatus}
-                                    </TableCell>
-                                    <TableCell>
-                                        {invoice.paymentMethod}
-                                    </TableCell>
-                                    <TableCell className="text-right">
-                                        {invoice.totalAmount}
-                                    </TableCell>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Resiko Approved Terbaru</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>ID</TableHead>
+                                    <TableHead>Name</TableHead>
+                                    <TableHead>Description</TableHead>
+                                    <TableHead>Owner</TableHead>
+                                    <TableHead>Likelihood</TableHead>
+                                    <TableHead>Impact</TableHead>
+                                    <TableHead>Risk Level</TableHead>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                        <TableFooter>
-                            <TableRow>
-                                <TableCell colSpan={3}>Total</TableCell>
-                                <TableCell className="text-right">
-                                    $2,500.00
-                                </TableCell>
-                            </TableRow>
-                        </TableFooter>
-                    </Table>
+                            </TableHeader>
+                            <TableBody>
+                                {riskData.map((risk) => (
+                                    <TableRow key={risk.id}>
+                                        <TableCell>{risk.id}</TableCell>
+                                        <TableCell>{risk.name}</TableCell>
+                                        <TableCell>
+                                            {risk.description}
+                                        </TableCell>
+                                        <TableCell>{risk.owner}</TableCell>
+                                        <TableCell>
+                                            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
+                                                {risk.likelihood}
+                                            </span>
+                                        </TableCell>
+                                        <TableCell>
+                                            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
+                                                {risk.impact}
+                                            </span>
+                                        </TableCell>
+                                        <TableCell>
+                                            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
+                                                {risk.riskLevel}
+                                            </span>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </CardContent>
                 </Card>
             </div>
         </DashboardLayout>
