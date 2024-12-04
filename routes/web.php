@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\FakultasController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\IdentificationsController;
 use App\Http\Controllers\MitigationsController;
 use App\Http\Controllers\MonitoringController;
@@ -33,16 +31,12 @@ Route::middleware(["auth","role:admin|rektor|dekan|kaprodi"])->group(function ()
     Route::get('/monitoring', [MonitoringController::class, 'index'])->name('monitoring.index');
 });
 
-Route::middleware(["auth","role:admin"])->group(function () {
-    Route::get("/admin", fn() => to_route('users.index'));
-    Route::get("/admin/users", [UserController::class, 'index'])->name('users.index');
-    Route::get("/admin/fakultas", [FakultasController::class, 'index'])->name('fakultas.index');
-});
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+require __DIR__ . '/admin.php';
 
 require __DIR__ . '/auth.php';

@@ -15,7 +15,7 @@ import {
 } from "@/Components/ui/table";
 import { hasRole } from "@/utils/HasRole";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
-import { Bell, Terminal } from "lucide-react";
+import { Bell } from "lucide-react";
 
 const riskData = [
     {
@@ -81,10 +81,7 @@ export default function Dashboard() {
                     <AlertTitle>Anda Adalah Admin</AlertTitle>
                     <AlertDescription>
                         Pergi ke halaman{" "}
-                        <Link
-                            href="/admin"
-                            className="hover:underline font-bold"
-                        >
+                        <Link href="/admin" className="underline font-bold">
                             Admin
                         </Link>{" "}
                         untuk mengelola data
