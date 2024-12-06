@@ -1,5 +1,6 @@
-import { Button } from "@/Components/ui/button";
+import React from "react";
 import { Head } from "@inertiajs/react";
+import { Badge, Edit2Icon, EllipsisIcon, Plus, Trash2Icon } from "lucide-react";
 
 import {
     Table,
@@ -22,11 +23,9 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/Components/ui/dialog";
-
+import { Button } from "@/Components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
-import { Edit2Icon, EllipsisIcon, Plus, Trash2Icon } from "lucide-react";
 import { AdminLayout } from "@/Layouts/AdminLayout";
-import React from "react";
 import { useConfirm } from "@/Hooks/useConfirm";
 
 export default function FakultasPage() {
@@ -68,85 +67,92 @@ export default function FakultasPage() {
             </Dialog>
             <Head title="Fakultas Manajemen" />
             <AdminLayout>
-                <div>
-                    <Dialog>
-                        <DialogTrigger asChild>
-                            <Button>
-                                <Plus />
+                <div className="p-6">
+                    <div className="flex flex-col space-y-6">
+                        <div className="flex items-center justify-between">
+                            <div className="space-y-1">
+                                <h2 className="text-2xl font-semibold tracking-tight">
+                                    Fakultas Manajemen
+                                </h2>
+                                <p className="text-sm text-muted-foreground">
+                                    Kelola fakultas yang ada di universitas
+                                </p>
+                            </div>
+                            <Button
+                                className="flex items-center gap-2"
+                                onClick={() => open()}
+                            >
+                                <Plus className="h-4 w-4" />
                                 Tambahkan Fakultas Baru
                             </Button>
-                        </DialogTrigger>
-                        <DialogContent
-                            onPointerDownOutside={(e) => e.preventDefault()}
-                        >
-                            <DialogHeader>
-                                <DialogTitle>Buat Fakultas Baru</DialogTitle>
-                                <DialogDescription>
-                                    {/* TODO: Buat form */}
-                                </DialogDescription>
-                            </DialogHeader>
-                        </DialogContent>
-                    </Dialog>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Fakultas</TableHead>
-                                <TableHead>Dbuat Oleh</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            <TableRow>
-                                <TableCell>
-                                    Fakultas Sains dan Teknologi
-                                </TableCell>
-                                <TableCell>
-                                    <div className="flex gap-x-2 items-center">
-                                        <Avatar>
-                                            <AvatarFallback>AD</AvatarFallback>
-                                            <AvatarImage src="https://i.pravatar.cc/300" />
-                                        </Avatar>
-                                        <span>Ahmad Zidni Hidayat</span>
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <Button variant="ghost">
-                                                <EllipsisIcon />
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-24 p-0">
-                                            <div className="flex flex-col">
-                                                <Button
-                                                    onClick={() =>
-                                                        setDialogEditState({
-                                                            id: "1",
-                                                            open: true,
-                                                        })
-                                                    }
-                                                    className="justify-start"
-                                                    variant="ghost"
-                                                >
-                                                    <Edit2Icon className="size-4" />
-                                                    Edit
-                                                </Button>
-                                                <Button
-                                                    onClick={() =>
-                                                        onDeleteUser("1")
-                                                    }
-                                                    className="justify-start"
-                                                    variant="ghost"
-                                                >
-                                                    <Trash2Icon className="size-4" />
-                                                    Hapus
-                                                </Button>
+                        </div>
+                        <div className="rounded-md border">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Nama</TableHead>
+                                        <TableHead>Singkatan</TableHead>
+                                        <TableHead>Dibuat Oleh</TableHead>
+                                        <TableHead>Tanggal dibuat</TableHead>
+                                        <TableHead className="w-[80px]">
+                                            Aksi
+                                        </TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell className="font-medium">
+                                            Sains dan Teknologi
+                                        </TableCell>
+                                        <TableCell className="font-medium">
+                                            FST
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="flex gap-x-2 items-center">
+                                                <Avatar>
+                                                    <AvatarFallback>
+                                                        AD
+                                                    </AvatarFallback>
+                                                    <AvatarImage src="https://i.pravatar.cc/300" />
+                                                </Avatar>
+                                                <span>Ahmad Zidni Hidayat</span>
                                             </div>
-                                        </PopoverContent>
-                                    </Popover>
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
+                                        </TableCell>
+                                        <TableCell>tanggal</TableCell>
+                                        <TableCell>
+                                            <Popover>
+                                                <PopoverTrigger asChild>
+                                                    <Button variant="ghost">
+                                                        <EllipsisIcon />
+                                                    </Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent className="w-24 p-0">
+                                                    <div className="flex flex-col">
+                                                        <Button
+                                                            onClick={() => {}}
+                                                            className="justify-start"
+                                                            variant="ghost"
+                                                        >
+                                                            <Edit2Icon className="size-4" />
+                                                            Edit
+                                                        </Button>
+                                                        <Button
+                                                            onClick={() => {}}
+                                                            className="justify-start"
+                                                            variant="ghost"
+                                                        >
+                                                            <Trash2Icon className="size-4" />
+                                                            Hapus
+                                                        </Button>
+                                                    </div>
+                                                </PopoverContent>
+                                            </Popover>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </div>
+                    </div>
                 </div>
             </AdminLayout>
         </>

@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
-
-use function Pest\Laravel\json;
-
 class UserController extends Controller
 {
     /**
@@ -99,13 +97,40 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {
-        $request->validate([
-            'id' => 'required',
-        ]);
+{
+    $user = User::findOrFail($id);
 
-        User::destroy($id);
-    }
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => [
+            'required', 
+            'string', 
+            'email', 
+            'max:255', 
+            Rule::unique('users')->ignore($user->id),
+        ],
+        'role' => ['required', Rule::in(['admin', 'rektor', 'dekan'])],
+    ], [
+        'name.required' => 'Nama harus diisi',
+        'email.required' => 'Email harus diisi',
+        'email.email' => 'Email tidak valid',
+        'email.unique' => 'Email sudah terdaftar',
+        'role.required' => 'Role harus diisi'
+    ]);
+
+    // Update user details
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->save();
+
+    // Remove existing roles
+    $user->roles()->detach();
+
+    // Assign new role
+    $user->syncRoles([$request->role]);
+
+    return back()->with('success', 'User updated successfully');
+}
 
     /**
      * Remove the specified resource from storage.

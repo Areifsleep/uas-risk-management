@@ -4,50 +4,67 @@ import { router, useForm } from "@inertiajs/react";
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogHeader,
     DialogTitle,
 } from "@/Components/ui/dialog";
 import { Input } from "@/Components/ui/input";
 
-import { useModalCreateUserStore } from "../Store/useModalCreateUserStore";
 import { Button } from "@/Components/ui/button";
+import { useModalEditUserStore } from "../Store/useModalEditUserStore";
+import { useEffect } from "react";
 
-export const CreateUserModal = () => {
-    const { isOpen, close } = useModalCreateUserStore();
-    const { data, setData, reset, post, processing, errors } = useForm({
-        name: "",
-        email: "",
-        password: "",
-        role: "",
+export const EditUserModal = () => {
+    const {
+        data: initialData,
+        close,
+        isOpen,
+        resetState,
+    } = useModalEditUserStore();
+
+    const { data, setData, reset, patch, processing, errors } = useForm({
+        name: initialData.name,
+        email: initialData.email,
+        role: initialData.role,
     });
 
-    const handleCloseModal = () => {
-        close();
-        reset();
-    };
+    useEffect(() => {
+        setData({
+            name: initialData.name,
+            email: initialData.email,
+            role: initialData.role,
+        });
+    }, [initialData]);
 
     console.log(data);
 
+    const onCloseEditModal = () => {
+        reset();
+        resetState();
+        close();
+    };
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(route("users.store"), {
+        patch(route("users.update", initialData.id), {
             onSuccess: () => {
                 close();
                 router.reload();
                 reset();
-                toast.success(`User ${data.name} berhasil dibuat`);
+                toast.success(`User ${data.name} berhasil diubah`);
             },
             onError: () => {
-                toast.error("Gagal membuat user baru");
+                toast.error("Gagal mengubah user");
             },
         });
     };
 
     return (
-        <Dialog open={isOpen} onOpenChange={handleCloseModal}>
+        <Dialog open={isOpen} onOpenChange={onCloseEditModal}>
             <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
                 <DialogHeader>
-                    <DialogTitle>Buat User Baru</DialogTitle>
+                    <DialogTitle>Edit User</DialogTitle>
+                    <DialogDescription></DialogDescription>
                     <form onSubmit={handleSubmit} className="space-y-3">
                         <div className="flex flex-col gap-y-3">
                             <label htmlFor="name">Nama</label>
@@ -55,6 +72,7 @@ export const CreateUserModal = () => {
                                 type="text"
                                 id="name"
                                 name="name"
+                                value={data.name}
                                 onChange={(e) =>
                                     setData({
                                         ...data,
@@ -75,6 +93,7 @@ export const CreateUserModal = () => {
                                 type="email"
                                 id="email"
                                 name="email"
+                                value={data.email}
                                 onChange={(e) =>
                                     setData({
                                         ...data,
@@ -89,29 +108,11 @@ export const CreateUserModal = () => {
                             )}
                         </div>
                         <div className="flex flex-col gap-y-3">
-                            <label htmlFor="password">Password</label>
-                            <Input
-                                type="password"
-                                id="password"
-                                name="password"
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        password: e.target.value,
-                                    })
-                                }
-                            />
-                            {errors.password && (
-                                <span className="text-red-500">
-                                    {errors.password}
-                                </span>
-                            )}
-                        </div>
-                        <div className="flex flex-col gap-y-3">
                             <label htmlFor="role">Role</label>
                             <select
                                 name="role"
                                 id="role"
+                                value={data.role}
                                 onChange={(e) =>
                                     setData({
                                         ...data,
