@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Faculty;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,7 +14,10 @@ class FakultasController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Fakultas/FakultasPage');
+        $fakultas = Faculty::with('createdBy')->get();
+        return Inertia::render('Admin/Fakultas/FakultasPage',[
+            'fakultas' => $fakultas
+        ]);
     }
 
     /**

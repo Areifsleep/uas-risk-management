@@ -1,6 +1,6 @@
 import React from "react";
 import { Head } from "@inertiajs/react";
-import { Badge, Edit2Icon, EllipsisIcon, Plus, Trash2Icon } from "lucide-react";
+import { Edit2Icon, EllipsisIcon, Plus, Trash2Icon } from "lucide-react";
 
 import {
     Table,
@@ -21,14 +21,20 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/Components/ui/dialog";
 import { Button } from "@/Components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/Components/ui/avatar";
 import { AdminLayout } from "@/Layouts/AdminLayout";
 import { useConfirm } from "@/Hooks/useConfirm";
 
-export default function FakultasPage() {
+import { FakultasWithCreatedBy } from "@/types/fakultas";
+import { FormatDate } from "@/utils/FormatDate";
+
+export default function FakultasPage({
+    fakultas,
+}: {
+    fakultas: FakultasWithCreatedBy;
+}) {
     const [dialogEditState, setDialogEditState] = React.useState({
         open: false,
         id: "1",
@@ -67,7 +73,7 @@ export default function FakultasPage() {
             </Dialog>
             <Head title="Fakultas Manajemen" />
             <AdminLayout>
-                <div className="p-6">
+                <div className="md:px-6">
                     <div className="flex flex-col space-y-6">
                         <div className="flex items-center justify-between">
                             <div className="space-y-1">
@@ -100,55 +106,63 @@ export default function FakultasPage() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    <TableRow>
-                                        <TableCell className="font-medium">
-                                            Sains dan Teknologi
-                                        </TableCell>
-                                        <TableCell className="font-medium">
-                                            FST
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="flex gap-x-2 items-center">
-                                                <Avatar>
-                                                    <AvatarFallback>
-                                                        AD
-                                                    </AvatarFallback>
-                                                    <AvatarImage src="https://i.pravatar.cc/300" />
-                                                </Avatar>
-                                                <span>Ahmad Zidni Hidayat</span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>tanggal</TableCell>
-                                        <TableCell>
-                                            <Popover>
-                                                <PopoverTrigger asChild>
-                                                    <Button variant="ghost">
-                                                        <EllipsisIcon />
-                                                    </Button>
-                                                </PopoverTrigger>
-                                                <PopoverContent className="w-24 p-0">
-                                                    <div className="flex flex-col">
-                                                        <Button
-                                                            onClick={() => {}}
-                                                            className="justify-start"
-                                                            variant="ghost"
-                                                        >
-                                                            <Edit2Icon className="size-4" />
-                                                            Edit
+                                    {fakultas.map((f) => (
+                                        <TableRow key={f.id}>
+                                            <TableCell className="font-medium">
+                                                {f.name}
+                                            </TableCell>
+                                            <TableCell className="font-medium">
+                                                {f.short_name}
+                                            </TableCell>
+                                            <TableCell>
+                                                <div className="flex gap-x-2 items-center">
+                                                    <Avatar className="size-7">
+                                                        <AvatarFallback>
+                                                            {f.created_by.name
+                                                                .charAt(0)
+                                                                .toUpperCase()}
+                                                        </AvatarFallback>
+                                                        <AvatarImage src="" />
+                                                    </Avatar>
+                                                    <span>
+                                                        {f.created_by.name}
+                                                    </span>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>
+                                                {FormatDate(f.created_at)}
+                                            </TableCell>
+                                            <TableCell>
+                                                <Popover>
+                                                    <PopoverTrigger asChild>
+                                                        <Button variant="ghost">
+                                                            <EllipsisIcon />
                                                         </Button>
-                                                        <Button
-                                                            onClick={() => {}}
-                                                            className="justify-start"
-                                                            variant="ghost"
-                                                        >
-                                                            <Trash2Icon className="size-4" />
-                                                            Hapus
-                                                        </Button>
-                                                    </div>
-                                                </PopoverContent>
-                                            </Popover>
-                                        </TableCell>
-                                    </TableRow>
+                                                    </PopoverTrigger>
+                                                    <PopoverContent className="w-24 p-0">
+                                                        <div className="flex flex-col">
+                                                            <Button
+                                                                onClick={() => {}}
+                                                                className="justify-start"
+                                                                variant="ghost"
+                                                            >
+                                                                <Edit2Icon className="size-4" />
+                                                                Edit
+                                                            </Button>
+                                                            <Button
+                                                                onClick={() => {}}
+                                                                className="justify-start"
+                                                                variant="ghost"
+                                                            >
+                                                                <Trash2Icon className="size-4" />
+                                                                Hapus
+                                                            </Button>
+                                                        </div>
+                                                    </PopoverContent>
+                                                </Popover>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
                                 </TableBody>
                             </Table>
                         </div>

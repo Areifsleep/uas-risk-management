@@ -46,4 +46,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function faculties()
+    {
+        return $this->hasMany(Faculty::class, 'created_by');
+    }
 }

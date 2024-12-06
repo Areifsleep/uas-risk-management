@@ -18,7 +18,6 @@ class RolePermissionSeeder extends Seeder
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'rektor']);
         Role::create(['name' => 'dekan']);
-        Role::create(['name' => 'kaprodi']);
 
         Permission::create(['name' => 'tambah_user']);
         Permission::create(['name' => 'edit_user']);
@@ -28,10 +27,6 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'edit_fakultas']);
         Permission::create(['name' => 'hapus_fakultas']);
         
-        Permission::create(['name' => 'tambah_prodi']);
-        Permission::create(['name' => 'edit_prodi']);
-        Permission::create(['name' => 'hapus_prodi']);
-
         Permission::create(['name' => 'tambah_resiko']);
         Permission::create(['name' => 'edit_resiko']);
         Permission::create(['name' => 'hapus_resiko']);
@@ -44,9 +39,6 @@ class RolePermissionSeeder extends Seeder
         $roleAdmin->givePermissionTo('tambah_fakultas');
         $roleAdmin->givePermissionTo('edit_fakultas');
         $roleAdmin->givePermissionTo('hapus_fakultas');
-        $roleAdmin->givePermissionTo('tambah_prodi');
-        $roleAdmin->givePermissionTo('edit_prodi');
-        $roleAdmin->givePermissionTo('hapus_prodi');
         $roleAdmin->givePermissionTo('tambah_resiko');
         $roleAdmin->givePermissionTo('edit_resiko');
         $roleAdmin->givePermissionTo('hapus_resiko');
@@ -57,26 +49,5 @@ class RolePermissionSeeder extends Seeder
         $roleDekan->givePermissionTo('edit_resiko');
         $roleDekan->givePermissionTo('hapus_resiko');
         $roleDekan->givePermissionTo('setujui_resiko');
-
-        $roleKaprodi = Role::findByName('kaprodi');
-        $roleKaprodi->givePermissionTo('tambah_resiko');
-        $roleKaprodi->givePermissionTo('edit_resiko');
-        $roleKaprodi->givePermissionTo('hapus_resiko');
-        
-
-        // Role::create(['name' => 'admin']);
-        // Role::create(['name' => 'penulis']);
-
-        // $roleAdmin = Role::findByName('admin');
-        // $roleAdmin->givePermissionTo('tambah user');
-        // $roleAdmin->givePermissionTo('edit user');
-        // $roleAdmin->givePermissionTo('hapus user');
-        // $roleAdmin->givePermissionTo('lihat user');
-
-        // $rolePenulis = Role::findByName('penulis');
-        // $rolePenulis->givePermissionTo('tambah tulisan');
-        // $rolePenulis->givePermissionTo('edit tulisan');
-        // $rolePenulis->givePermissionTo('hapus tulisan');
-        // $rolePenulis->givePermissionTo('lihat tulisan');
     }
 }

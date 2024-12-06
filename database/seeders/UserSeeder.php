@@ -36,13 +36,6 @@ class UserSeeder extends Seeder
         ]);
 
         $dekan->assignRole('dekan');
-        
-        $kaprodi = User::create([
-            'name' => 'kaprodi',
-            'email' => "kaprodi",
-            "password" => bcrypt('12345678')
-        ]);
 
-        $kaprodi->assignRole('kaprodi');
     }
 }
