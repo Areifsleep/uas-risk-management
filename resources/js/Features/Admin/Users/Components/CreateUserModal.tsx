@@ -4,13 +4,14 @@ import { router, useForm } from "@inertiajs/react";
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
     DialogHeader,
     DialogTitle,
 } from "@/Components/ui/dialog";
 import { Input } from "@/Components/ui/input";
-
-import { useModalCreateUserStore } from "../Store/useModalCreateUserStore";
 import { Button } from "@/Components/ui/button";
+
+import { useModalCreateUserStore } from "@/Features/Admin/Users/Store/useModalCreateUserStore";
 
 export const CreateUserModal = () => {
     const { isOpen, close } = useModalCreateUserStore();
@@ -25,8 +26,6 @@ export const CreateUserModal = () => {
         close();
         reset();
     };
-
-    console.log(data);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -48,6 +47,7 @@ export const CreateUserModal = () => {
             <DialogContent onPointerDownOutside={(e) => e.preventDefault()}>
                 <DialogHeader>
                     <DialogTitle>Buat User Baru</DialogTitle>
+                    <DialogDescription></DialogDescription>
                     <form onSubmit={handleSubmit} className="space-y-3">
                         <div className="flex flex-col gap-y-3">
                             <label htmlFor="name">Nama</label>
@@ -120,7 +120,6 @@ export const CreateUserModal = () => {
                                 }
                             >
                                 <option value="">--Pilih Role--</option>
-                                <option value="admin">Admin</option>
                                 <option value="rektor">Rektor</option>
                                 <option value="dekan">Dekan</option>
                             </select>

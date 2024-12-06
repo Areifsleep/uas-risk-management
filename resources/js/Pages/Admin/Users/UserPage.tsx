@@ -1,6 +1,6 @@
-import { Button } from "@/Components/ui/button";
-import { Head, router, useForm } from "@inertiajs/react";
-import React from "react";
+import { toast } from "sonner";
+import { Head, router } from "@inertiajs/react";
+import { Edit2Icon, EllipsisIcon, Plus, Trash2Icon } from "lucide-react";
 
 import {
     Table,
@@ -15,34 +15,31 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/Components/ui/popover";
+import { Badge } from "@/Components/ui/badge";
+import { Button } from "@/Components/ui/button";
 
-import { Edit2Icon, EllipsisIcon, Plus, Trash2Icon } from "lucide-react";
 import { AdminLayout } from "@/Layouts/AdminLayout";
 
 import { useConfirm } from "@/Hooks/useConfirm";
-import { Users } from "@/types/users";
-
-import { CreateUserModal } from "@/Features/Admin/Users/Components/CreateUserModal";
-import { useModalCreateUserStore } from "@/Features/Admin/Users/Store/useModalCreateUserStore";
-import { toast } from "sonner";
-import { useModalEditUserStore } from "@/Features/Admin/Users/Store/useModalEditUserStore";
-import { EditUserModal } from "@/Features/Admin/Users/Components/EditUserModal";
-import { Badge } from "@/Components/ui/badge";
 import { FormatDate } from "@/utils/FormatDate";
 
-export default function UserPage({ users }: { users: Users }) {
+import { Users } from "@/types/users";
+
+import { EditUserModal } from "@/Features/Admin/Users/Components/EditUserModal";
+import { CreateUserModal } from "@/Features/Admin/Users/Components/CreateUserModal";
+import { useModalEditUserStore } from "@/Features/Admin/Users/Store/useModalEditUserStore";
+import { useModalCreateUserStore } from "@/Features/Admin/Users/Store/useModalCreateUserStore";
+import { Auth } from "@/types";
+
+export default function UserPage({
+    users,
+    auth,
+}: {
+    users: Users;
+    auth: Auth;
+}) {
     const { open } = useModalCreateUserStore();
     const { open: openEditModal } = useModalEditUserStore();
-    const {
-        data,
-        setData,
-        reset,
-        delete: destroy,
-        processing,
-        errors,
-    } = useForm({
-        id: "",
-    });
 
     const [DialogConfrim, confirm] = useConfirm(
         "Apakah anda yakin?",
@@ -50,13 +47,21 @@ export default function UserPage({ users }: { users: Users }) {
     );
 
     const onDeleteUser = async (id: string) => {
+        const currrentUser = users.find((user) => user.id === auth.user.id);
+
+        if (currrentUser?.id.toString() === id) {
+            console.log("Tidak bisa menghapus diri sendiri");
+            toast.error("Tidak bisa menghapus diri sendiri");
+            return;
+        }
+
         const ok = await confirm();
 
         if (!ok) {
             return;
         }
 
-        destroy(route("users.destroy", id), {
+        router.delete(route("users.destroy", id), {
             onSuccess: () => {
                 toast.success("User berhasil dihapus");
                 router.reload();
@@ -74,7 +79,7 @@ export default function UserPage({ users }: { users: Users }) {
             <EditUserModal />
             <Head title="User Manajemen" />
             <AdminLayout>
-                <div className="p-6">
+                <div className="md:p-6">
                     <div className="flex flex-col space-y-6">
                         <div className="flex items-center justify-between">
                             <div className="space-y-1">
@@ -171,6 +176,11 @@ export default function UserPage({ users }: { users: Users }) {
                                                                 Edit
                                                             </Button>
                                                             <Button
+                                                                disabled={
+                                                                    auth.user
+                                                                        .id ===
+                                                                    user.id
+                                                                }
                                                                 onClick={() =>
                                                                     onDeleteUser(
                                                                         user.id.toString()

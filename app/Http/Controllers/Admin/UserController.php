@@ -51,7 +51,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            "role" => "required"
+            'role' => ['required', Rule::in([ 'rektor', 'dekan'])],
         ],[
             'name.required' => 'Nama harus diisi',
             'email.required' => 'Email harus diisi',
@@ -59,7 +59,7 @@ class UserController extends Controller
             'email.unique' => 'Email sudah terdaftar',
             'password.required' => 'Password harus diisi',
             'password.min' => 'Password minimal 8 karakter',
-            'role.required' => 'Role harus diisi'
+            'role.required' => 'Role harus diisi atau tidak valid'
         ]);
 
         $newUser = User::create([
@@ -68,13 +68,8 @@ class UserController extends Controller
             'password' => bcrypt($request->password),
         ]);
 
-        if ($request->role === 'admin') {
-            $newUser->assignRole('admin');
-        } else if ($request->role === 'rektor') {
-            $newUser->assignRole('rektor');
-        } else if ($request->role === 'dekan') {
-            $newUser->assignRole('dekan');
-        } 
+    // Assign new role
+    $newUser->syncRoles([$request->role]);
     }
 
     /**
@@ -98,8 +93,10 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
 {
+    // Find user
     $user = User::findOrFail($id);
 
+    // Validate request
     $request->validate([
         'name' => 'required|string|max:255',
         'email' => [
@@ -109,7 +106,7 @@ class UserController extends Controller
             'max:255', 
             Rule::unique('users')->ignore($user->id),
         ],
-        'role' => ['required', Rule::in(['admin', 'rektor', 'dekan'])],
+        'role' => ['required', Rule::in([ 'rektor', 'dekan'])],
     ], [
         'name.required' => 'Nama harus diisi',
         'email.required' => 'Email harus diisi',

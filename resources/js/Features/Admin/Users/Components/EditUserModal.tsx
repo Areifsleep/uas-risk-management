@@ -1,4 +1,5 @@
 import { toast } from "sonner";
+import { useEffect } from "react";
 import { router, useForm } from "@inertiajs/react";
 
 import {
@@ -9,10 +10,9 @@ import {
     DialogTitle,
 } from "@/Components/ui/dialog";
 import { Input } from "@/Components/ui/input";
-
 import { Button } from "@/Components/ui/button";
-import { useModalEditUserStore } from "../Store/useModalEditUserStore";
-import { useEffect } from "react";
+
+import { useModalEditUserStore } from "@/Features/Admin/Users/Store/useModalEditUserStore";
 
 export const EditUserModal = () => {
     const {
@@ -35,8 +35,6 @@ export const EditUserModal = () => {
             role: initialData.role,
         });
     }, [initialData]);
-
-    console.log(data);
 
     const onCloseEditModal = () => {
         reset();
@@ -121,7 +119,6 @@ export const EditUserModal = () => {
                                 }
                             >
                                 <option value="">--Pilih Role--</option>
-                                <option value="admin">Admin</option>
                                 <option value="rektor">Rektor</option>
                                 <option value="dekan">Dekan</option>
                             </select>

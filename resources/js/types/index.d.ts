@@ -13,3 +13,8 @@ export type PageProps<
         roles: string[];
     };
 };
+
+export type Auth = {
+    user: User;
+    roles: string[];
+};
