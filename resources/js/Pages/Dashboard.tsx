@@ -16,6 +16,7 @@ import {
 import { hasRole } from "@/utils/HasRole";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 import { Bell } from "lucide-react";
+import { Button } from "@/Components/ui/button";
 
 const riskData = [
     {
@@ -80,11 +81,19 @@ export default function Dashboard() {
                     <Bell className="h-4 w-4" />
                     <AlertTitle>Anda Adalah Admin</AlertTitle>
                     <AlertDescription>
-                        Pergi ke halaman{" "}
-                        <Link href="/admin" className="underline font-bold">
-                            Admin
-                        </Link>{" "}
-                        untuk mengelola data
+                        Pergi ke halaman Admin untuk mengelola data
+                        <div>
+                            <Button
+                                asChild
+                                className="mt-2.5"
+                                size="sm"
+                                variant="default"
+                            >
+                                <Link href="/admin" className="font-bold">
+                                    Admin area
+                                </Link>
+                            </Button>
+                        </div>
                     </AlertDescription>
                 </Alert>
             )}

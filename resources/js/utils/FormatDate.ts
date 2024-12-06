@@ -1,7 +1,9 @@
+import moment from "moment";
+
 export const FormatDate = (date: string) => {
-    return new Date(date).toLocaleDateString("id-ID", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-    });
+    const localDate = moment.utc(date).local(); // Konversi dari UTC ke waktu lokal
+    const formattedDate = localDate.format("DD/MM/YYYY"); // Format tanggal
+    const formattedTime = localDate.format("HH:mm"); // Format waktu
+
+    return `${formattedDate}, ${formattedTime}`;
 };
