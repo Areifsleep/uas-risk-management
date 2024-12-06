@@ -3,6 +3,7 @@ import { PropsWithChildren } from "react";
 import NavLink from "@/Components/NavLink";
 
 import { DashboardNavbar } from "@/Features/Dashboard/Components/DashboardNavbar";
+import { Link } from "@inertiajs/react";
 
 interface DashboardLayoutProps extends PropsWithChildren {}
 
@@ -58,6 +59,9 @@ const AdminSubNavbar = () => {
                             {menu.name}
                         </NavLink>
                     ))}
+                    <NavLink href={route("dashboard")} active={false}>
+                        Back to Dashboard
+                    </NavLink>
                 </div>
             </div>
         </div>

@@ -51,4 +51,22 @@ class User extends Authenticatable
     {
         return $this->hasMany(Faculty::class, 'created_by');
     }
+
+    // Relasi untuk semua risiko yang dibuat oleh user
+    public function risksCreated()
+    {
+        return $this->hasMany(Risk::class, 'created_by');
+    }
+
+    // Relasi untuk semua risiko yang diupdate oleh user
+    public function risksUpdated()
+    {
+        return $this->hasMany(Risk::class, 'updated_by');
+    }
+
+    public function risksApproved()
+    {
+        return $this->hasMany(Risk::class, 'approved_by');
+    }
+
 }

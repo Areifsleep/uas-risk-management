@@ -12,4 +12,9 @@ class Faculty extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
+    public function risks()
+    {
+        return $this->hasMany(Risk::class, 'faculties_id');
+    }
 }
