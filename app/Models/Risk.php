@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Risk extends Model
 {
+
+    use HasFactory;
+    
     protected $fillable = [
         'name',
         'description',
@@ -18,7 +22,7 @@ class Risk extends Model
         'approved_by',
         'likelihood_id',
         'impact_id',
-        'level_risk_id',
+        'level_risk',
     ];
 
     // Menghubungkan ke user yang membuat (created_by)
