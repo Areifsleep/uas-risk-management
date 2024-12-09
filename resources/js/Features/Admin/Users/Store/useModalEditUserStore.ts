@@ -7,6 +7,7 @@ export const useModalEditUserStore = create<{
         name: string;
         email: string;
         role: string;
+        fakultas: number | string | null;
     };
     resetState: () => void;
     open: (data: {
@@ -14,6 +15,7 @@ export const useModalEditUserStore = create<{
         name: string;
         email: string;
         role: string;
+        fakultas: number | string | null;
     }) => void;
     close: () => void;
 }>((set) => ({
@@ -23,6 +25,7 @@ export const useModalEditUserStore = create<{
         name: "",
         email: "",
         role: "",
+        fakultas: "",
     },
     resetState() {
         set({
@@ -32,6 +35,7 @@ export const useModalEditUserStore = create<{
                 name: "",
                 email: "",
                 role: "",
+                fakultas: "",
             },
         });
     },

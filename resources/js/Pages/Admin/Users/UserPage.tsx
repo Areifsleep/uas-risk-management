@@ -20,24 +20,16 @@ import { Button } from "@/Components/ui/button";
 
 import { AdminLayout } from "@/Layouts/AdminLayout";
 
+import { Auth, UserPageProps } from "@/types";
 import { useConfirm } from "@/Hooks/useConfirm";
 import { FormatDate } from "@/utils/FormatDate";
-
-import { Users } from "@/types/users";
 
 import { EditUserModal } from "@/Features/Admin/Users/Components/EditUserModal";
 import { CreateUserModal } from "@/Features/Admin/Users/Components/CreateUserModal";
 import { useModalEditUserStore } from "@/Features/Admin/Users/Store/useModalEditUserStore";
 import { useModalCreateUserStore } from "@/Features/Admin/Users/Store/useModalCreateUserStore";
-import { Auth } from "@/types";
 
-export default function UserPage({
-    users,
-    auth,
-}: {
-    users: Users;
-    auth: Auth;
-}) {
+export default function UserPage({ users, auth }: UserPageProps) {
     const { open } = useModalCreateUserStore();
     const { open: openEditModal } = useModalEditUserStore();
 
@@ -102,7 +94,7 @@ export default function UserPage({
                             <Table>
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead className="w-[80px]">
+                                        <TableHead className="w-[80px] text-center">
                                             Avatar
                                         </TableHead>
                                         <TableHead>Name</TableHead>
@@ -110,7 +102,7 @@ export default function UserPage({
                                         <TableHead>Role</TableHead>
                                         <TableHead>Fakultas</TableHead>
                                         <TableHead>Tanggal dibuat</TableHead>
-                                        <TableHead className="w-[80px]">
+                                        <TableHead className="w-[80px] text-center">
                                             Aksi
                                         </TableHead>
                                     </TableRow>
@@ -145,7 +137,11 @@ export default function UserPage({
                                                     {user.role}
                                                 </Badge>
                                             </TableCell>
-                                            <TableCell>FST</TableCell>
+                                            <TableCell>
+                                                {user.faculty
+                                                    ? user.faculty
+                                                    : "-"}
+                                            </TableCell>
                                             <TableCell>
                                                 {FormatDate(user.created_at)}
                                             </TableCell>
@@ -159,6 +155,11 @@ export default function UserPage({
                                                     <PopoverContent className="w-24 p-0">
                                                         <div className="flex flex-col">
                                                             <Button
+                                                                disabled={
+                                                                    auth.user
+                                                                        .id ===
+                                                                    user.id
+                                                                }
                                                                 onClick={() =>
                                                                     openEditModal(
                                                                         {
@@ -166,6 +167,8 @@ export default function UserPage({
                                                                             name: user.name,
                                                                             email: user.email,
                                                                             role: user.role,
+                                                                            fakultas:
+                                                                                user.faculties_id,
                                                                         }
                                                                     )
                                                                 }

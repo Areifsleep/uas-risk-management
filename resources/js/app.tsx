@@ -6,13 +6,13 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { createRoot } from "react-dom/client";
 import { Toaster } from "./Components/ui/sonner";
 
+import { NextUIProvider } from "@nextui-org/system";
+
 const appName = import.meta.env.VITE_APP_NAME || "Risk Management System";
 
 createInertiaApp({
     title: (title) =>
-        title
-            ? `${title} - Risk Management System`
-            : `${appName} - Risk Management System`,
+        title ? `${title} - Masako` : `Risk Management System - Masako`,
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.tsx`,
@@ -23,8 +23,10 @@ createInertiaApp({
 
         root.render(
             <>
-                <App {...props} />
-                <Toaster />
+                <NextUIProvider>
+                    <App {...props} />
+                    <Toaster />
+                </NextUIProvider>
             </>
         );
     },

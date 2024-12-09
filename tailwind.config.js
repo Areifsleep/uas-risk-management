@@ -1,10 +1,12 @@
 import defaultTheme from "tailwindcss/defaultTheme";
-import forms from "@tailwindcss/forms";
+
+const { nextui } = require("@nextui-org/theme");
 
 /** @type {import('tailwindcss').Config} */
 export default {
     darkMode: ["class"],
     content: [
+        "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
@@ -70,5 +72,5 @@ export default {
         },
     },
 
-    plugins: [forms, require("tailwindcss-animate")],
+    plugins: [nextui(), require("tailwindcss-animate")],
 };

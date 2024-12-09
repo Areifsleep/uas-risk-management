@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Faculty;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,13 +27,17 @@ class UserController extends Controller
             'roles.name as role',
             'users.created_at',
             'users.updated_at',
+            'users.faculties_id',
             'faculties.short_name as faculty'
         )
         ->get();
+
+        $fakultas = Faculty::all()->select('id', 'short_name', 'name');
     
 
         return Inertia::render('Admin/Users/UserPage',[
-            'users' => $users
+            'users' => $users,
+            'fakultas' => $fakultas
         ]);
     }
 
@@ -54,6 +59,11 @@ class UserController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'role' => ['required', Rule::in([ 'rektor', 'admin_fakultas'])],
+            'fakultas' => [
+                'nullable',
+                Rule::requiredIf($request->role === 'admin_fakultas'),
+                'exists:faculties,id',
+            ],
         ],[
             'name.required' => 'Nama harus diisi',
             'email.required' => 'Email harus diisi',
@@ -61,13 +71,14 @@ class UserController extends Controller
             'email.unique' => 'Email sudah terdaftar',
             'password.required' => 'Password harus diisi',
             'password.min' => 'Password minimal 8 karakter',
-            'role.required' => 'Role harus diisi atau tidak valid'
+            'role.required' => 'Role harus diisi atau tidak valid',
         ]);
 
         $newUser = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'faculties_id' => $request->fakultas
         ]);
 
     // Assign new role
@@ -107,19 +118,26 @@ class UserController extends Controller
             'email', 
             'max:255', 
             Rule::unique('users')->ignore($user->id),
+
         ],
         'role' => ['required', Rule::in([ 'rektor', 'admin_fakultas'])],
+        'fakultas' => [
+                'nullable',
+                Rule::requiredIf($request->role === 'admin_fakultas'),
+                'exists:faculties,id',
+            ],
     ], [
         'name.required' => 'Nama harus diisi',
         'email.required' => 'Email harus diisi',
         'email.email' => 'Email tidak valid',
         'email.unique' => 'Email sudah terdaftar',
-        'role.required' => 'Role harus diisi'
+        'role.required' => 'Role harus diisi',
     ]);
 
     // Update user details
     $user->name = $request->name;
     $user->email = $request->email;
+    $user->faculties_id = $request->fakultas;
     $user->save();
 
     // Remove existing roles

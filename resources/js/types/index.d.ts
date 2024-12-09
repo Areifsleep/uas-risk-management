@@ -1,3 +1,5 @@
+import { Users } from "./users";
+
 export interface User {
     id: number;
     name: string;
@@ -18,3 +20,7 @@ export type Auth = {
     user: User;
     roles: string[];
 };
+
+export type UserPageProps = PageProps<{
+    users: Users;
+}>;

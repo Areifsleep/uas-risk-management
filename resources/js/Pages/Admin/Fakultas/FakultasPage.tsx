@@ -114,21 +114,7 @@ export default function FakultasPage({
                                             <TableCell className="font-medium">
                                                 {f.short_name}
                                             </TableCell>
-                                            <TableCell>
-                                                <div className="flex gap-x-2 items-center">
-                                                    <Avatar className="size-7">
-                                                        <AvatarFallback>
-                                                            {f.created_by.name
-                                                                .charAt(0)
-                                                                .toUpperCase()}
-                                                        </AvatarFallback>
-                                                        <AvatarImage src="" />
-                                                    </Avatar>
-                                                    <span>
-                                                        {f.created_by.name}
-                                                    </span>
-                                                </div>
-                                            </TableCell>
+                                            <TableCell>null</TableCell>
                                             <TableCell>
                                                 {FormatDate(f.created_at)}
                                             </TableCell>

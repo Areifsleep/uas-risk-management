@@ -14,7 +14,7 @@ class FakultasController extends Controller
      */
     public function index()
     {
-        $fakultas = Faculty::with('createdBy')->get();
+        $fakultas = Faculty::all();
         return Inertia::render('Admin/Fakultas/FakultasPage',[
             'fakultas' => $fakultas
         ]);
