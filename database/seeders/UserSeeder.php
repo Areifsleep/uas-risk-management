@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\RoleEnum;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Contracts\Role;
 
 class UserSeeder extends Seeder
 {
@@ -17,9 +19,10 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678'),
+
         ]);
 
-        $admin->assignRole('admin');
+        $admin->assignRole(RoleEnum::SuperAdmin);
 
         $rektor = User::create([
             'name' => 'rektor',
@@ -27,15 +30,16 @@ class UserSeeder extends Seeder
             "password" => bcrypt('12345678')
         ]);
 
-        $rektor->assignRole('rektor');
+        $rektor->assignRole(RoleEnum::Rektor);
 
-        $dekan = User::create([
-            'name' => 'dekan',
-            'email' => "dekan@gmail.com",
-            "password" => bcrypt('12345678')
+        $admin_fakultas = User::create([
+            'name' => 'fst',
+            'email' => "fst@gmail.com",
+            "password" => bcrypt('12345678'),
+            'faculties_id' => 1
         ]);
 
-        $dekan->assignRole('dekan');
+        $admin_fakultas->assignRole(RoleEnum::AdminFakultas);
 
     }
 }

@@ -14,21 +14,14 @@ class FacultySeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::find(3);
-
-        if (!$user) {
-            // Jika tidak ada user, seeder akan berhenti dengan pesan error
-            $this->command->error('Tidak ada user ditemukan. Buat user terlebih dahulu.');
-            return;
-        }
 
     $faculties = [
-            ['name' => 'Sains Dan Teknologi', 'short_name' => 'FST', 'created_by' => $user->id],
-            ['name' => 'Adab dan Ilmu Budaya', 'short_name' => 'ADAB', 'created_by' => $user->id],
-            ['name' => 'Dakwah dan Komunikasi', 'short_name' => 'DAKOM', 'created_by' => $user->id],
-            ['name' => 'Tarbiyah dan Keguruan', 'short_name' => 'TARBIYAH', 'created_by' => $user->id],
-            ['name' => 'Ilmu Sosial dan Humaniora', 'short_name' => 'SOSHUM', 'created_by' => $user->id],
-            ['name' => 'Ekonomi dan Bisnis Islam', 'short_name' => 'FEBI', 'created_by' => $user->id],
+            ['name' => 'Sains Dan Teknologi', 'short_name' => 'FST', ],
+            ['name' => 'Adab dan Ilmu Budaya', 'short_name' => 'ADAB', ],
+            ['name' => 'Dakwah dan Komunikasi', 'short_name' => 'DAKOM', ],
+            ['name' => 'Tarbiyah dan Keguruan', 'short_name' => 'TARBIYAH', ],
+            ['name' => 'Ilmu Sosial dan Humaniora', 'short_name' => 'SOSHUM', ],
+            ['name' => 'Ekonomi dan Bisnis Islam', 'short_name' => 'FEBI', ],
         ];
 
         foreach ($faculties as $faculty) {

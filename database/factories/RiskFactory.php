@@ -17,12 +17,12 @@ class RiskFactory extends Factory
     public function definition(): array
     {
         return [
-                'name' => fake()->name(),
+                'name' => fake()->word(),
                 'description' => fake()->sentence(),
                 'potential_disadvantages' => strval(fake()->numberBetween(1000, 10000)),
                 'risk_source' => fake()->randomElement(['Internal', 'External']),
                 'is_approved' => true,
-                'faculties_id' => 1,
+                'faculties_id' => fake()->numberBetween(1, 2),
                 'created_by' => 2,
                 'updated_by' => 2,
                 'approved_by' => 3,
