@@ -13,9 +13,6 @@ return new class extends Migration
     {
         Schema::create('faculties', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('created_by')->constrained(
-                table: 'users', indexName: 'faculty_created_by'
-            );
             $table->string('name');
             $table->string('short_name');
             $table->timestamps();
