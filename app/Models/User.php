@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable,HasRoles;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'faculties_id',
         'password',
     ];
 
@@ -47,9 +48,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function faculties()
+    public function faculty()
     {
-        return $this->hasMany(Faculty::class, 'created_by');
+        return $this->belongsTo(Faculty::class, 'faculties_id');
     }
 
     // Relasi untuk semua risiko yang dibuat oleh user

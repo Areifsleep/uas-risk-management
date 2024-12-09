@@ -25,6 +25,10 @@ class Risk extends Model
         'level_risk',
     ];
 
+    protected $casts = [
+        'is_approved' => 'boolean',
+    ];
+
     // Menghubungkan ke user yang membuat (created_by)
     public function creator()
     {
