@@ -75,6 +75,10 @@ class RiskController extends Controller
             'creator', 'updater', 'approver', 'faculty', 'likelihood', 'impact'
         ])->find($id);
 
+        if(!$risk){
+            abort(404);
+        }
+
         return Inertia::render('Risks/Show', [
             'risk' =>$risk,
         ]);
