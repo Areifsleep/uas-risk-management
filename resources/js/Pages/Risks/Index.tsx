@@ -1,17 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { DashboardLayout } from "@/Layouts/DashboardLayout";
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 
 import {
     Table,
     TableBody,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/Components/ui/table";
 import { AlertCircle, BarChart3, ShieldAlert } from "lucide-react";
+import { RisksType } from "@/types/risks";
+import { Button } from "@/Components/ui/button";
 
 const riskData = [
     {
@@ -61,7 +62,8 @@ const riskData = [
     },
 ];
 
-const RiskPage = () => {
+const RiskPage = ({ risks }: { risks: RisksType }) => {
+    console.log(risks);
     const onRowClick = (id: number) => {
         router.visit(`/risks/${id}`, {
             preserveScroll: false,
@@ -202,8 +204,15 @@ const RiskPage = () => {
                     </div>
 
                     <Card>
-                        <CardHeader>
-                            <CardTitle>Risk Details</CardTitle>
+                        <CardHeader className="flex justify-between flex-row items-center">
+                            <CardTitle className="text-xl">
+                                Daftar Risiko Dari Semua Fakultas
+                            </CardTitle>
+                            <Button
+                                onClick={() => router.visit("/risks/create")}
+                            >
+                                Create Risk
+                            </Button>
                         </CardHeader>
                         <CardContent>
                             <Table>
@@ -212,6 +221,7 @@ const RiskPage = () => {
                                         <TableHead>ID</TableHead>
                                         <TableHead>Name</TableHead>
                                         <TableHead>Description</TableHead>
+                                        <TableHead>Fakultas</TableHead>
                                         <TableHead>Owner</TableHead>
                                         <TableHead>Likelihood</TableHead>
                                         <TableHead>Impact</TableHead>
@@ -219,7 +229,7 @@ const RiskPage = () => {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {riskData.map((risk) => (
+                                    {risks.map((risk) => (
                                         <TableRow
                                             key={risk.id}
                                             className="cursor-pointer hover:bg-gray-100"
@@ -230,20 +240,25 @@ const RiskPage = () => {
                                             <TableCell>
                                                 {risk.description}
                                             </TableCell>
-                                            <TableCell>{risk.owner}</TableCell>
+                                            <TableCell>
+                                                {risk.faculties.short_name}
+                                            </TableCell>
+                                            <TableCell>
+                                                {risk.creator.name}
+                                            </TableCell>
                                             <TableCell>
                                                 <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
-                                                    {risk.likelihood}
+                                                    {risk.likelihood.rating}
                                                 </span>
                                             </TableCell>
                                             <TableCell>
                                                 <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
-                                                    {risk.impact}
+                                                    {risk.impact.rating}
                                                 </span>
                                             </TableCell>
                                             <TableCell>
                                                 <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
-                                                    {risk.riskLevel}
+                                                    {risk.level_risk}
                                                 </span>
                                             </TableCell>
                                         </TableRow>

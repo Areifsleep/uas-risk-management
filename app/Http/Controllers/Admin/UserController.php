@@ -18,13 +18,15 @@ class UserController extends Controller
         $users = DB::table('users')
         ->leftJoin('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
         ->leftJoin('roles', 'model_has_roles.role_id', '=', 'roles.id')
+        ->leftJoin('faculties', 'users.faculties_id', '=', 'faculties.id')
         ->select(
             'users.id', 
             'users.name', 
             'users.email', 
             'roles.name as role',
             'users.created_at',
-            'users.updated_at'
+            'users.updated_at',
+            'faculties.short_name as faculty'
         )
         ->get();
     
@@ -51,7 +53,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
-            'role' => ['required', Rule::in([ 'rektor', 'dekan'])],
+            'role' => ['required', Rule::in([ 'rektor', 'admin_fakultas'])],
         ],[
             'name.required' => 'Nama harus diisi',
             'email.required' => 'Email harus diisi',
@@ -106,7 +108,7 @@ class UserController extends Controller
             'max:255', 
             Rule::unique('users')->ignore($user->id),
         ],
-        'role' => ['required', Rule::in([ 'rektor', 'dekan'])],
+        'role' => ['required', Rule::in([ 'rektor', 'admin_fakultas'])],
     ], [
         'name.required' => 'Nama harus diisi',
         'email.required' => 'Email harus diisi',

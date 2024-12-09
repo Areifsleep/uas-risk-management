@@ -18,7 +18,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(["auth","role:admin|rektor|dekan|kaprodi"])->group(function () {
+Route::middleware(["auth"])->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');

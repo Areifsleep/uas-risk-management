@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RiskResource;
+use App\Models\Risk;
+use App\Models\User;
+use App\RoleEnum;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class RiskController extends Controller
@@ -12,8 +17,36 @@ class RiskController extends Controller
      */
     public function index()
     {
-        // TODO: Fetch data from database
-        return Inertia::render('Risks/Index');
+        $current_auth = Auth::user();
+
+        $current_user = User::find($current_auth->id);
+
+        $risks_query = Risk::with([
+            'creator', 'updater', 'approver', 'faculty', 'likelihood', 'impact'
+        ]);
+        
+        // ->where('is_approved',true)->whereHas('faculty', function($query) use ($current_user) {
+        //         $query->where('id', $current_user->faculties_id);
+        //     })->get();
+
+        // ->where('is_approved',true) ->whereHas('faculty', function($query) {
+        //     $query->where('id', 1);
+        // })
+
+        if ($current_user->hasRole(RoleEnum::SuperAdmin) || $current_user->hasRole(RoleEnum::Rektor)) {
+            $risks_query = $risks_query->where('is_approved', true)->get();
+        } else {
+            $risks_query = $risks_query->where('is_approved', true)->where('faculties_id',$current_user->faculties_id)->get();
+                // ->whereHas('faculty', function ($query) use ($current_user) {
+                //     $query->where('faculties_id',2)->get();
+                // });
+        }
+
+        $risks = RiskResource::collection($risks_query)->toArray(request());
+
+        return Inertia::render('Risks/Index',[
+            'risks' => $risks,
+        ]);
     }
 
     /**
@@ -38,14 +71,12 @@ class RiskController extends Controller
     public function show(string $id)
     {
 
-        // TODO: Fetch data from database
+        $risk = Risk::with([
+            'creator', 'updater', 'approver', 'faculty', 'likelihood', 'impact'
+        ])->find($id);
 
         return Inertia::render('Risks/Show', [
-            'risk' => [
-                'id' => $id,
-                'name' => 'Risk Name',
-                'description' => 'Risk Description',
-            ],
+            'risk' =>$risk,
         ]);
     }
 

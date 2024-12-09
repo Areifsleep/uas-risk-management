@@ -38,14 +38,23 @@ export const UserButton = () => {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                        <Link href={route("profile.edit")}>
+                        <Link
+                            href={route("profile.edit")}
+                            as="button"
+                            className="w-full"
+                        >
                             <User className="mr-2 h-4 w-4" />
                             <span>Profile</span>
                         </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
-                        <Link href={route("logout")} method="post">
+                        <Link
+                            href={route("logout")}
+                            as="button"
+                            className="w-full"
+                            method="post"
+                        >
                             <LogOut className="mr-2 h-4 w-4" />
                             <span>Log out</span>
                         </Link>

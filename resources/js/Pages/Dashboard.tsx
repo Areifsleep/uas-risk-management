@@ -76,7 +76,7 @@ export default function Dashboard() {
                     {createGreetingMessage(props.auth.user.name)}
                 </p>
             </div>
-            {hasRole("admin") && (
+            {hasRole("super_admin") && (
                 <Alert variant="info" className="mt-5">
                     <Bell className="h-4 w-4" />
                     <AlertTitle>Anda Adalah Admin</AlertTitle>

@@ -121,7 +121,9 @@ export const CreateUserModal = () => {
                             >
                                 <option value="">--Pilih Role--</option>
                                 <option value="rektor">Rektor</option>
-                                <option value="dekan">Dekan</option>
+                                <option value="admin_fakultas">
+                                    Admin Fakultas
+                                </option>
                             </select>
                             {errors.role && (
                                 <span className="text-red-500">

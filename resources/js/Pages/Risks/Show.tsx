@@ -1,36 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
-import { Button } from "@/Components/ui/button";
-import {
-    ArrowLeft,
-    AlertTriangle,
-    BarChart2,
-    User,
-    Calendar,
-} from "lucide-react";
-import { DashboardLayout } from "@/Layouts/DashboardLayout";
 import { Link } from "@inertiajs/react";
+import { ArrowLeft, User, Calendar } from "lucide-react";
 
-// Mock data for demonstration
-const riskData = {
-    id: 1,
-    name: "Ac Mati",
-    description: "Panas Cik",
-    owner: "FST",
-    likelihood: 4,
-    impact: 4,
-    riskLevel: 4,
-    createdAt: "2023-06-15",
-    lastUpdated: "2023-12-01",
-    mitigationPlan:
-        "1. Check AC units regularly\n2. Have backup portable AC units\n3. Implement a maintenance schedule",
-};
+import { DashboardLayout } from "@/Layouts/DashboardLayout";
+import { Button } from "@/Components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { RiskById } from "@/types/RiskById";
+import { FormatDate } from "@/utils/FormatDate";
 
-export default function RiskDetail() {
+export default function RiskDetail({ risk }: { risk: RiskById }) {
+    console.log(risk);
     const getRiskLevelColor = (level: number) => {
         if (level <= 2) return "bg-green-100 text-green-800";
         if (level <= 3) return "bg-yellow-100 text-yellow-800";
         return "bg-red-100 text-red-800";
     };
+
+    const riskData = risk;
 
     return (
         <DashboardLayout>
@@ -43,7 +28,7 @@ export default function RiskDetail() {
             <div className="grid gap-6 md:grid-cols-2">
                 <Card>
                     <CardHeader>
-                        <CardTitle className="text-2xl font-bold">
+                        <CardTitle className="capitalize text-2xl font-bold">
                             {riskData.name}
                         </CardTitle>
                     </CardHeader>
@@ -57,21 +42,28 @@ export default function RiskDetail() {
                                 <span className="font-semibold mr-2">
                                     Owner:
                                 </span>{" "}
-                                {riskData.owner}
+                                {riskData.creator.name}
+                            </div>
+                            <div className="flex items-center">
+                                <User className="mr-2 h-4 w-4" />
+                                <span className="font-semibold mr-2">
+                                    Fakultas:
+                                </span>{" "}
+                                {`${riskData.faculty.name} (${riskData.faculty.short_name})`}
                             </div>
                             <div className="flex items-center">
                                 <Calendar className="mr-2 h-4 w-4" />
                                 <span className="font-semibold mr-2">
                                     Created:
                                 </span>{" "}
-                                {riskData.createdAt}
+                                {FormatDate(riskData.created_at)}
                             </div>
                             <div className="flex items-center">
                                 <Calendar className="mr-2 h-4 w-4" />
                                 <span className="font-semibold mr-2">
                                     Last Updated:
                                 </span>{" "}
-                                {riskData.lastUpdated}
+                                {FormatDate(riskData.updated_at)}
                             </div>
                         </div>
                     </CardContent>
@@ -89,20 +81,20 @@ export default function RiskDetail() {
                                 </span>
                                 <span
                                     className={`px-2 py-1 rounded-full ${getRiskLevelColor(
-                                        riskData.likelihood
+                                        riskData.likelihood.rating
                                     )}`}
                                 >
-                                    {riskData.likelihood}
+                                    {riskData.likelihood.rating}
                                 </span>
                             </div>
                             <div className="flex items-center justify-between">
                                 <span className="font-semibold">Impact:</span>
                                 <span
                                     className={`px-2 py-1 rounded-full ${getRiskLevelColor(
-                                        riskData.impact
+                                        riskData.impact.rating
                                     )}`}
                                 >
-                                    {riskData.impact}
+                                    {riskData.impact.rating}
                                 </span>
                             </div>
                             <div className="flex items-center justify-between">
@@ -111,10 +103,10 @@ export default function RiskDetail() {
                                 </span>
                                 <span
                                     className={`px-2 py-1 rounded-full ${getRiskLevelColor(
-                                        riskData.riskLevel
+                                        parseInt(riskData.level_risk)
                                     )}`}
                                 >
-                                    {riskData.riskLevel}
+                                    {riskData.level_risk}
                                 </span>
                             </div>
                         </div>
@@ -127,7 +119,7 @@ export default function RiskDetail() {
                     </CardHeader>
                     <CardContent>
                         <pre className="whitespace-pre-wrap bg-muted p-4 rounded-md">
-                            {riskData.mitigationPlan}
+                            1. Check AC units regularly
                         </pre>
                     </CardContent>
                 </Card>
