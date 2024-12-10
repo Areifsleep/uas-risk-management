@@ -10,7 +10,7 @@ export default function LandingPage({
 }: PageProps<{ laravelVersion: string; phpVersion: string }>) {
     return (
         <>
-            <Head title="Masako" />
+            <Head title="Manajemen Ancaman Serta Resiko" />
             <header className="h-14 w-full sticky top-0 z-50 flex items-center bg-background">
                 <div className="px-5 container w-full mx-auto flex justify-between items-center">
                     <ApplicationLogo />
