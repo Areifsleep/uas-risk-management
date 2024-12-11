@@ -4,6 +4,11 @@ export interface User {
     id: number;
     name: string;
     email: string;
+    faculty?: {
+        id: number;
+        name: string;
+        short_name: string;
+    };
     email_verified_at?: string;
 }
 

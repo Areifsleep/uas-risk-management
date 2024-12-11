@@ -16,6 +16,9 @@ class RiskFactory extends Factory
      */
     public function definition(): array
     {
+        $likelihood_id = $this->faker->numberBetween(1, 5);
+        $impact_id = $this->faker->numberBetween(1, 5);
+
         return [
                 'name' => fake()->word(),
                 'description' => fake()->sentence(),
@@ -26,9 +29,9 @@ class RiskFactory extends Factory
                 'created_by' => 2,
                 'updated_by' => 2,
                 'approved_by' => 3,
-                'likelihood_id' => fake()->numberBetween(1, 5),
-                'impact_id' => fake()->numberBetween(1, 5),
-                'level_risk' => fake()->numberBetween(1, 25),
+                'likelihood_id' => $likelihood_id,
+                'impact_id' => $impact_id,
+                'level_risk' => $likelihood_id * $impact_id, 
         ];
     }
 }

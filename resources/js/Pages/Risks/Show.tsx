@@ -6,6 +6,11 @@ import { Button } from "@/Components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { RiskById } from "@/types/RiskById";
 import { FormatDate } from "@/utils/FormatDate";
+import {
+    likelihoodColorMapping,
+    mappingValueLevel,
+} from "@/Constants/LikelihoodColorMapping";
+import { cn } from "@/lib/utils";
 
 export default function RiskDetail({ risk }: { risk: RiskById }) {
     console.log(risk);
@@ -79,35 +84,50 @@ export default function RiskDetail({ risk }: { risk: RiskById }) {
                                 <span className="font-semibold">
                                     Likelihood:
                                 </span>
-                                <span
-                                    className={`px-2 py-1 rounded-full ${getRiskLevelColor(
-                                        riskData.likelihood.rating
-                                    )}`}
-                                >
-                                    {riskData.likelihood.rating}
-                                </span>
+                                <div className="flex justify-center h-full items-center">
+                                    <span
+                                        className={cn(
+                                            "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                                            likelihoodColorMapping[
+                                                risk.likelihood.rating
+                                            ].color
+                                        )}
+                                    >
+                                        {risk.likelihood.rating}
+                                    </span>
+                                </div>
                             </div>
                             <div className="flex items-center justify-between">
                                 <span className="font-semibold">Impact:</span>
-                                <span
-                                    className={`px-2 py-1 rounded-full ${getRiskLevelColor(
-                                        riskData.impact.rating
-                                    )}`}
-                                >
-                                    {riskData.impact.rating}
-                                </span>
+                                <div className="flex justify-center h-full items-center">
+                                    <span
+                                        className={cn(
+                                            "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                                            likelihoodColorMapping[
+                                                risk.impact.rating
+                                            ].color
+                                        )}
+                                    >
+                                        {risk.impact.rating}
+                                    </span>
+                                </div>
                             </div>
                             <div className="flex items-center justify-between">
                                 <span className="font-semibold">
                                     Risk Level:
                                 </span>
-                                <span
-                                    className={`px-2 py-1 rounded-full ${getRiskLevelColor(
-                                        parseInt(riskData.level_risk)
-                                    )}`}
-                                >
-                                    {riskData.level_risk}
-                                </span>
+                                <div className="flex justify-center h-full items-center">
+                                    <span
+                                        className={cn(
+                                            "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                                            mappingValueLevel(
+                                                parseInt(risk.level_risk)
+                                            ).color
+                                        )}
+                                    >
+                                        {risk.level_risk}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </CardContent>

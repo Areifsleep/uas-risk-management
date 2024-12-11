@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\RiskResource;
+use App\Models\Faculty;
 use App\Models\Risk;
 use App\Models\User;
 use App\RoleEnum;
@@ -44,8 +45,15 @@ class RiskController extends Controller
 
         $risks = RiskResource::collection($risks_query)->toArray(request());
 
+        $faculties = null;
+        
+        if($current_user->hasRole(RoleEnum::SuperAdmin) || $current_user->hasRole(RoleEnum::Rektor)){
+            $faculties = Faculty::withCount('risks')->get();
+        }
+
         return Inertia::render('Risks/Index',[
             'risks' => $risks,
+            'faculties' => $faculties,
         ]);
     }
 
@@ -79,8 +87,26 @@ class RiskController extends Controller
             abort(404);
         }
 
+        $userId = Auth::id(); 
+        
+        $user = User::find($userId);
+
+        if (!$user) {
+            abort(403, 'Kamu tidak memiliki akses untuk mengakses sumber daya ini');
+        }
+
+
+        // Periksa apakah user bukan super admin atau rektor dan mencoba mengakses data dari fakultas lain
+        if (!$user->hasRole('super_admin') && !$user->hasRole('rektor')) {
+            // Periksa apakah pengguna hanya memiliki akses ke fakultas yang sama dengan data
+            if ($user->faculties_id !== $risk->faculties_id) {
+                abort(403, 'Kamu tidak memiliki akses untuk mengakses sumber daya ini');
+            }
+        }
+
         return Inertia::render('Risks/Show', [
             'risk' =>$risk,
+           
         ]);
     }
 

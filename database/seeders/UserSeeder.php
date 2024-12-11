@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
         $admin->assignRole(RoleEnum::SuperAdmin);
 
         $rektor = User::create([
-            'name' => 'rektor',
+            'name' => 'Prayogo Latupono',
             'email' => "rektor@gmail.com",
             "password" => bcrypt('12345678')
         ]);

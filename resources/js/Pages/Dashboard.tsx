@@ -15,7 +15,13 @@ import {
 } from "@/Components/ui/table";
 import { hasRole } from "@/utils/HasRole";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
-import { Bell } from "lucide-react";
+import {
+    AlertCircle,
+    BarChart3,
+    Bell,
+    School2,
+    ShieldAlert,
+} from "lucide-react";
 import { Button } from "@/Components/ui/button";
 
 const riskData = [
@@ -100,35 +106,173 @@ export default function Dashboard() {
             <div className="pt-5 grid grid-cols-12 gap-3 items-center">
                 <div className="w-full col-span-12 lg:col-span-5">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <Card className="w-full h-[calc((450px/2)-8px)] flex-col flex p-3">
-                            <div className="py-2.5 border-b">
-                                Jumlah Fakultas
-                            </div>
-                            <div className="flex items-center justify-center h-full">
-                                <span className="text-6xl font-bold">10</span>
-                            </div>
+                        <Card>
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-sm font-medium">
+                                    Overall Score
+                                </CardTitle>
+                                <BarChart3 className="h-4 w-4 text-red-500" />
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-center justify-center">
+                                    <div className="relative h-32 w-32">
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <span className="text-4xl font-bold">
+                                                1
+                                            </span>
+                                        </div>
+                                        <svg
+                                            className="h-full w-full"
+                                            viewBox="0 0 100 100"
+                                        >
+                                            <circle
+                                                className="stroke-current text-red-100"
+                                                cx="50"
+                                                cy="50"
+                                                r="45"
+                                                fill="none"
+                                                strokeWidth="10"
+                                            />
+                                            <circle
+                                                className="stroke-current text-red-500"
+                                                cx="50"
+                                                cy="50"
+                                                r="45"
+                                                fill="none"
+                                                strokeWidth="10"
+                                                strokeDasharray="283"
+                                                strokeDashoffset="70"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </CardContent>
                         </Card>
-                        <Card className="w-full h-[calc((450px/2)-8px)] flex-col flex p-3">
-                            <div className="py-2.5 border-b">
-                                Jumlah Program Studi
-                            </div>
-                            <div className="flex items-center justify-center h-full">
-                                <span className="text-6xl font-bold">10</span>
-                            </div>
+                        <Card>
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-sm font-medium">
+                                    High Risk Issues
+                                </CardTitle>
+                                <ShieldAlert className="h-4 w-4 text-emerald-500" />
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-center justify-center">
+                                    <div className="relative h-32 w-32">
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <span className="text-4xl font-bold">
+                                                2
+                                            </span>
+                                        </div>
+                                        <svg
+                                            className="h-full w-full"
+                                            viewBox="0 0 100 100"
+                                        >
+                                            <circle
+                                                className="stroke-current text-emerald-100"
+                                                cx="50"
+                                                cy="50"
+                                                r="45"
+                                                fill="none"
+                                                strokeWidth="10"
+                                            />
+                                            <circle
+                                                className="stroke-current text-emerald-500"
+                                                cx="50"
+                                                cy="50"
+                                                r="45"
+                                                fill="none"
+                                                strokeWidth="10"
+                                                strokeDasharray="283"
+                                                strokeDashoffset="141"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </CardContent>
                         </Card>
-                        <Card className="w-full h-[calc((450px/2)-8px)] flex-col flex p-3">
-                            <div className="py-2.5 border-b">Jumlah Users</div>
-                            <div className="flex items-center justify-center h-full">
-                                <span className="text-6xl font-bold">10</span>
-                            </div>
+                        <Card>
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-sm font-medium">
+                                    Total Risk
+                                </CardTitle>
+                                <AlertCircle className="h-4 w-4 text-yellow-500" />
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-center justify-center">
+                                    <div className="relative h-32 w-32">
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <span className="text-4xl font-bold">
+                                                3
+                                            </span>
+                                        </div>
+                                        <svg
+                                            className="h-full w-full"
+                                            viewBox="0 0 100 100"
+                                        >
+                                            <circle
+                                                className="stroke-current text-yellow-100"
+                                                cx="50"
+                                                cy="50"
+                                                r="45"
+                                                fill="none"
+                                                strokeWidth="10"
+                                            />
+                                            <circle
+                                                className="stroke-current text-yellow-500"
+                                                cx="50"
+                                                cy="50"
+                                                r="45"
+                                                fill="none"
+                                                strokeWidth="10"
+                                                strokeDasharray="283"
+                                                strokeDashoffset="212"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </CardContent>
                         </Card>
-                        <Card className="w-full h-[calc((450px/2)-8px)] flex-col flex p-3">
-                            <div className="py-2.5 border-b">
-                                Jumlah Resiko Yang Disetujui
-                            </div>
-                            <div className="flex items-center justify-center h-full">
-                                <span className="text-6xl font-bold">10</span>
-                            </div>
+                        <Card>
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-sm font-medium">
+                                    Total Program Studi
+                                </CardTitle>
+                                <School2 className="h-4 w-4 text-green-500" />
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-center justify-center">
+                                    <div className="relative h-32 w-32">
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <span className="text-4xl font-bold">
+                                                3
+                                            </span>
+                                        </div>
+                                        <svg
+                                            className="h-full w-full"
+                                            viewBox="0 0 100 100"
+                                        >
+                                            <circle
+                                                className="stroke-current text-green-100"
+                                                cx="50"
+                                                cy="50"
+                                                r="45"
+                                                fill="none"
+                                                strokeWidth="10"
+                                            />
+                                            <circle
+                                                className="stroke-current text-green-500"
+                                                cx="50"
+                                                cy="50"
+                                                r="45"
+                                                fill="none"
+                                                strokeWidth="10"
+                                                strokeDasharray="283"
+                                                strokeDashoffset="212"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </CardContent>
                         </Card>
                     </div>
                 </div>

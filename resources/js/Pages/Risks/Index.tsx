@@ -1,6 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
-import { DashboardLayout } from "@/Layouts/DashboardLayout";
 import { Head, router } from "@inertiajs/react";
+import { DashboardLayout } from "@/Layouts/DashboardLayout";
+import { AlertCircle, BarChart3, ShieldAlert } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { PageProps } from "@/types";
+import { RisksType } from "@/types/risks";
+import {
+    likelihoodColorMapping,
+    mappingValueLevel,
+} from "@/Constants/LikelihoodColorMapping";
 
 import {
     Table,
@@ -10,71 +18,32 @@ import {
     TableHeader,
     TableRow,
 } from "@/Components/ui/table";
-import { AlertCircle, BarChart3, ShieldAlert } from "lucide-react";
-import { RisksType } from "@/types/risks";
 import { Button } from "@/Components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { hasRole } from "@/utils/HasRole";
+import { Empty } from "@/Components/Empty";
+import { ListFakultas } from "./ListFakultas";
 
-const riskData = [
-    {
-        id: 1,
-        name: "Ac Mati",
-        description: "Panas Cik",
-        owner: "FST",
-        likelihood: 4,
-        impact: 4,
-        riskLevel: 4,
-    },
-    {
-        id: 2,
-        name: "Server Down",
-        description: "Layanan Terganggu",
-        owner: "IT",
-        likelihood: 3,
-        impact: 5,
-        riskLevel: 5,
-    },
-    {
-        id: 3,
-        name: "Data Breach",
-        description: "Kebocoran Informasi",
-        owner: "Security",
-        likelihood: 2,
-        impact: 5,
-        riskLevel: 4,
-    },
-    {
-        id: 4,
-        name: "Budget Overrun",
-        description: "Pengeluaran Melebihi Anggaran",
-        owner: "Finance",
-        likelihood: 3,
-        impact: 3,
-        riskLevel: 3,
-    },
-    {
-        id: 5,
-        name: "Staff Shortage",
-        description: "Kekurangan Personel",
-        owner: "HR",
-        likelihood: 2,
-        impact: 4,
-        riskLevel: 3,
-    },
-];
-
-const RiskPage = ({ risks }: { risks: RisksType }) => {
-    console.log(risks);
+const RiskPage = ({
+    risks,
+    auth,
+}: PageProps<{
+    risks: RisksType;
+}>) => {
     const onRowClick = (id: number) => {
         router.visit(`/risks/${id}`, {
             preserveScroll: false,
         });
     };
+
+    const isSpecialRole = hasRole("super_admin") || hasRole("rektor");
+
     return (
         <>
             <Head title="Risks" />
             <DashboardLayout>
                 <div className="flex flex-col gap-5">
-                    <div className="grid gap-4 md:grid-cols-3">
+                    {/* <div className="grid gap-4 md:grid-cols-3">
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">
@@ -201,17 +170,28 @@ const RiskPage = ({ risks }: { risks: RisksType }) => {
                                 </div>
                             </CardContent>
                         </Card>
-                    </div>
+                    </div> */}
+
+                    {isSpecialRole && <ListFakultas />}
 
                     <Card>
                         <CardHeader className="flex justify-between flex-row items-center">
                             <CardTitle className="text-xl">
-                                Daftar Risiko Dari Semua Fakultas
+                                {isSpecialRole ? (
+                                    <span>
+                                        Daftar Risiko Dari Semua Fakultas
+                                    </span>
+                                ) : (
+                                    <span>
+                                        Daftar Risiko Fakultas{" "}
+                                        {auth.user.faculty?.name}
+                                    </span>
+                                )}
                             </CardTitle>
                             <Button
-                                onClick={() => router.visit("/risks/create")}
+                                onClick={() => router.visit("/identifications")}
                             >
-                                Create Risk
+                                Input Risiko
                             </Button>
                         </CardHeader>
                         <CardContent>
@@ -223,46 +203,109 @@ const RiskPage = ({ risks }: { risks: RisksType }) => {
                                         <TableHead>Description</TableHead>
                                         <TableHead>Fakultas</TableHead>
                                         <TableHead>Owner</TableHead>
-                                        <TableHead>Likelihood</TableHead>
-                                        <TableHead>Impact</TableHead>
-                                        <TableHead>Risk Level</TableHead>
+                                        <TableHead className="text-center">
+                                            Likelihood
+                                        </TableHead>
+                                        <TableHead className="text-center">
+                                            Impact
+                                        </TableHead>
+                                        <TableHead className="text-center">
+                                            Risk Level
+                                        </TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {risks.map((risk) => (
-                                        <TableRow
-                                            key={risk.id}
-                                            className="cursor-pointer hover:bg-gray-100"
-                                            onClick={() => onRowClick(risk.id)}
-                                        >
-                                            <TableCell>{risk.id}</TableCell>
-                                            <TableCell>{risk.name}</TableCell>
-                                            <TableCell>
-                                                {risk.description}
-                                            </TableCell>
-                                            <TableCell>
-                                                {risk.faculties.short_name}
-                                            </TableCell>
-                                            <TableCell>
-                                                {risk.creator.name}
-                                            </TableCell>
-                                            <TableCell>
-                                                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
-                                                    {risk.likelihood.rating}
-                                                </span>
-                                            </TableCell>
-                                            <TableCell>
-                                                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
-                                                    {risk.impact.rating}
-                                                </span>
-                                            </TableCell>
-                                            <TableCell>
-                                                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
-                                                    {risk.level_risk}
-                                                </span>
+                                    {risks.length === 0 ? (
+                                        <TableRow>
+                                            <TableCell colSpan={8}>
+                                                <Empty
+                                                    title="Tidak ada data risiko untuk saat ini"
+                                                    withButton
+                                                    message="Bagus sekali! Tidak ada risiko yang perlu dikhawatirkan."
+                                                    handleCreate={() =>
+                                                        router.visit(
+                                                            "/risks/create"
+                                                        )
+                                                    }
+                                                    textButton="Buat Risiko"
+                                                />
                                             </TableCell>
                                         </TableRow>
-                                    ))}
+                                    ) : (
+                                        risks.map((risk) => (
+                                            <TableRow
+                                                key={risk.id}
+                                                className="cursor-pointer hover:bg-gray-100"
+                                                onClick={() =>
+                                                    onRowClick(risk.id)
+                                                }
+                                            >
+                                                <TableCell>{risk.id}</TableCell>
+                                                <TableCell>
+                                                    {risk.name}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {risk.description}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {risk.faculties.short_name}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {risk.creator.name}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="flex justify-center h-full items-center">
+                                                        <span
+                                                            className={cn(
+                                                                "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                                                                likelihoodColorMapping[
+                                                                    risk
+                                                                        .likelihood
+                                                                        .rating
+                                                                ].color
+                                                            )}
+                                                        >
+                                                            {
+                                                                risk.likelihood
+                                                                    .rating
+                                                            }
+                                                        </span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="flex justify-center h-full items-center">
+                                                        <span
+                                                            className={cn(
+                                                                "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                                                                likelihoodColorMapping[
+                                                                    risk.impact
+                                                                        .rating
+                                                                ]?.color
+                                                            )}
+                                                        >
+                                                            {risk.impact.rating}
+                                                        </span>
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="flex justify-center h-full items-center">
+                                                        <span
+                                                            className={cn(
+                                                                "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                                                                mappingValueLevel(
+                                                                    parseInt(
+                                                                        risk.level_risk
+                                                                    )
+                                                                ).color
+                                                            )}
+                                                        >
+                                                            {risk.level_risk}
+                                                        </span>
+                                                    </div>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))
+                                    )}
                                 </TableBody>
                             </Table>
                         </CardContent>

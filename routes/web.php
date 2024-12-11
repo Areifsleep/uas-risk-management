@@ -37,6 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth','role:super_admin|rektor'])->group(function(){
+    Route::get('/risks/fakultas/{fakultas_id}',function($fakultas_id){
+        return Inertia::render('Risks/ShowByFakultas',[
+            'fakultas_id' => $fakultas_id
+        ]);
+    })->name('risks.show_by_fakultas');
+});
+
 require __DIR__ . '/admin.php';
 
 require __DIR__ . '/auth.php';
