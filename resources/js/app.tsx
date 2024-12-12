@@ -8,7 +8,7 @@ import { Toaster } from "./Components/ui/sonner";
 
 import { NextUIProvider } from "@nextui-org/system";
 
-const appName = import.meta.env.VITE_APP_NAME || "Risk Management System";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 createInertiaApp({
     title: (title) =>
@@ -21,13 +21,15 @@ createInertiaApp({
     setup({ el, App, props }) {
         const root = createRoot(el);
 
+        const queryClient = new QueryClient();
+
         root.render(
-            <>
+            <QueryClientProvider client={queryClient}>
                 <NextUIProvider>
                     <App {...props} />
                     <Toaster />
                 </NextUIProvider>
-            </>
+            </QueryClientProvider>
         );
     },
     progress: {

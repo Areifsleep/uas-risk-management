@@ -25,22 +25,11 @@ class RiskController extends Controller
         $risks_query = Risk::with([
             'creator', 'updater', 'approver', 'faculty', 'likelihood', 'impact'
         ]);
-        
-        // ->where('is_approved',true)->whereHas('faculty', function($query) use ($current_user) {
-        //         $query->where('id', $current_user->faculties_id);
-        //     })->get();
-
-        // ->where('is_approved',true) ->whereHas('faculty', function($query) {
-        //     $query->where('id', 1);
-        // })
 
         if ($current_user->hasRole(RoleEnum::SuperAdmin) || $current_user->hasRole(RoleEnum::Rektor)) {
             $risks_query = $risks_query->where('is_approved', true)->get();
         } else {
             $risks_query = $risks_query->where('is_approved', true)->where('faculties_id',$current_user->faculties_id)->get();
-                // ->whereHas('faculty', function ($query) use ($current_user) {
-                //     $query->where('faculties_id',2)->get();
-                // });
         }
 
         $risks = RiskResource::collection($risks_query)->toArray(request());
@@ -132,5 +121,33 @@ class RiskController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function showByFaculty(string $fakultas_id)
+    {
+
+        $current_id = Auth::id();
+        $current_user = User::find($current_id);
+
+        if (!$current_user->hasRole('super_admin') && !$current_user->hasRole('rektor')) {
+            abort(403, 'Kamu tidak memiliki akses untuk mengakses sumber daya ini');
+        }
+
+        $fakultas = Faculty::query()->where('id',$fakultas_id)->select('id', 'name')->first();
+
+        if (!$fakultas) {
+            abort(404);
+        }
+
+        $risks = Risk::with([
+            'creator', 'updater', 'approver', 'faculty', 'likelihood', 'impact'
+        ])->where('faculties_id', $fakultas_id)->get();
+
+
+
+        return Inertia::render('Risks/ShowByFakultas', [
+            'risks' => $risks,
+            'fakultas' => $fakultas,
+        ]);
     }
 }

@@ -20,12 +20,6 @@ const menus = [
         href: "identifications.index",
     },
     {
-        id: 4,
-        name: "Mitigasi",
-        alias: "mitigations",
-        href: "mitigations.index",
-    },
-    {
         id: 5,
         name: "Monitoring",
         alias: "monitoring",

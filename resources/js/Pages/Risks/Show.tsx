@@ -1,26 +1,31 @@
 import { Link } from "@inertiajs/react";
-import { ArrowLeft, User, Calendar } from "lucide-react";
+import { ArrowLeft, User, Calendar, School2 } from "lucide-react";
 
-import { DashboardLayout } from "@/Layouts/DashboardLayout";
-import { Button } from "@/Components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 import { RiskById } from "@/types/RiskById";
+import { Button } from "@/Components/ui/button";
 import { FormatDate } from "@/utils/FormatDate";
+import { DashboardLayout } from "@/Layouts/DashboardLayout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+
 import {
     likelihoodColorMapping,
     mappingValueLevel,
 } from "@/Constants/LikelihoodColorMapping";
+
 import { cn } from "@/lib/utils";
+import { getMitigations } from "@/Api/GetMitigations";
+import { Empty } from "@/Components/Empty";
 
 export default function RiskDetail({ risk }: { risk: RiskById }) {
-    console.log(risk);
-    const getRiskLevelColor = (level: number) => {
-        if (level <= 2) return "bg-green-100 text-green-800";
-        if (level <= 3) return "bg-yellow-100 text-yellow-800";
-        return "bg-red-100 text-red-800";
-    };
-
     const riskData = risk;
+
+    const {
+        data: mitigations,
+        isLoading: isLoadingLoadMitigations,
+        isError: isErrorLoadMitigations,
+    } = getMitigations(risk.id);
+
+    const isMitigationEmpty = mitigations?.length === 0;
 
     return (
         <DashboardLayout>
@@ -50,7 +55,7 @@ export default function RiskDetail({ risk }: { risk: RiskById }) {
                                 {riskData.creator.name}
                             </div>
                             <div className="flex items-center">
-                                <User className="mr-2 h-4 w-4" />
+                                <School2 className="mr-2 h-4 w-4" />
                                 <span className="font-semibold mr-2">
                                     Fakultas:
                                 </span>{" "}
@@ -139,7 +144,22 @@ export default function RiskDetail({ risk }: { risk: RiskById }) {
                     </CardHeader>
                     <CardContent>
                         <pre className="whitespace-pre-wrap bg-muted p-4 rounded-md">
-                            1. Check AC units regularly
+                            {isLoadingLoadMitigations ? (
+                                <p>Loading...</p>
+                            ) : isErrorLoadMitigations ? (
+                                <p>Something went wrong...</p>
+                            ) : isMitigationEmpty ? (
+                                <Empty
+                                    title="Tidak ada rencana mitigasi"
+                                    message="Tidak ada rencana mitigasi yang tersedia untuk risiko ini."
+                                />
+                            ) : (
+                                mitigations?.map((mitigation, i) => (
+                                    <p key={mitigation.id}>
+                                        {i + 1}. {mitigation.plan}
+                                    </p>
+                                ))
+                            )}
                         </pre>
                     </CardContent>
                 </Card>

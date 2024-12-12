@@ -61,4 +61,9 @@ class Risk extends Model
         return $this->belongsTo(Impact::class, 'impact_id');
     }
 
+    public function mitigations()
+    {
+        return $this->hasMany(Mitigation::class, 'risk_id');
+    }
+
 }
