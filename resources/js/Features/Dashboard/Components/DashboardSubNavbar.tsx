@@ -19,12 +19,6 @@ const menus = [
         alias: "identifications",
         href: "identifications.index",
     },
-    {
-        id: 5,
-        name: "Monitoring",
-        alias: "monitoring",
-        href: "monitoring.index",
-    },
 ];
 
 const isActive = (baseRoute: string) => {

@@ -27,8 +27,10 @@ export const Empty = ({
             )}
         >
             <FolderOpen className="w-12 h-12 text-muted-foreground mb-4" />
-            <p className="text-lg font-medium mb-2">{title}</p>
-            <p className="text-sm text-muted-foreground mb-4">{message}</p>
+            <span className="text-lg font-medium mb-2">{title}</span>
+            <span className="text-sm text-muted-foreground mb-4">
+                {message}
+            </span>
             {withButton && (
                 <Button onClick={handleCreate}>
                     <Plus className="w-4 h-4 mr-2" />

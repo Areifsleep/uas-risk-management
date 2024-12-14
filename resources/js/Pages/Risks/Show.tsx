@@ -7,26 +7,16 @@ import { FormatDate } from "@/utils/FormatDate";
 import { DashboardLayout } from "@/Layouts/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
 
+import { cn } from "@/lib/utils";
 import {
     likelihoodColorMapping,
     mappingValueLevel,
 } from "@/Constants/LikelihoodColorMapping";
 
-import { cn } from "@/lib/utils";
-import { getMitigations } from "@/Api/GetMitigations";
-import { Empty } from "@/Components/Empty";
+import MitigationRisks from "../Mitigations/Index";
 
 export default function RiskDetail({ risk }: { risk: RiskById }) {
     const riskData = risk;
-
-    const {
-        data: mitigations,
-        isLoading: isLoadingLoadMitigations,
-        isError: isErrorLoadMitigations,
-    } = getMitigations(risk.id);
-
-    const isMitigationEmpty = mitigations?.length === 0;
-
     return (
         <DashboardLayout>
             <Button variant="outline" className="mb-6" asChild>
@@ -138,31 +128,9 @@ export default function RiskDetail({ risk }: { risk: RiskById }) {
                     </CardContent>
                 </Card>
 
-                <Card className="md:col-span-2">
-                    <CardHeader>
-                        <CardTitle>Mitigation Plan</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <pre className="whitespace-pre-wrap bg-muted p-4 rounded-md">
-                            {isLoadingLoadMitigations ? (
-                                <p>Loading...</p>
-                            ) : isErrorLoadMitigations ? (
-                                <p>Something went wrong...</p>
-                            ) : isMitigationEmpty ? (
-                                <Empty
-                                    title="Tidak ada rencana mitigasi"
-                                    message="Tidak ada rencana mitigasi yang tersedia untuk risiko ini."
-                                />
-                            ) : (
-                                mitigations?.map((mitigation, i) => (
-                                    <p key={mitigation.id}>
-                                        {i + 1}. {mitigation.plan}
-                                    </p>
-                                ))
-                            )}
-                        </pre>
-                    </CardContent>
-                </Card>
+                <div className="md:col-span-2">
+                    <MitigationRisks risk={risk} />
+                </div>
             </div>
         </DashboardLayout>
     );

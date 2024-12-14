@@ -58,6 +58,10 @@ Route::middleware('auth')->group(function () {
     
     return response()->json($mitigations);
    })->name('loadMitigationsByRisk');
+
+   Route::post('/mitigations', [MitigationsController::class, 'store'])->name('mitigations.store');
+   Route::delete('/mitigations/{id}', [MitigationsController::class, 'destroy'])->name('mitigations.destroy');
+   Route::patch('/mitigations/{id}', [MitigationsController::class, 'update'])->name('mitigations.update');
 });
 
 require __DIR__ . '/admin.php';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mitigation;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -28,7 +29,19 @@ class MitigationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'plan' => 'required|string|max:255',
+            'risk_id' => 'required|integer'
+        ]);
+        
+        $mitigation = new Mitigation();
+        $mitigation->plan = $request->input('plan');
+        $mitigation->risk_id = $request->input('risk_id');
+
+        $mitigation->save();
+
+        return ;
     }
 
     /**
@@ -52,7 +65,15 @@ class MitigationsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'plan' => 'required',
+        ]);
+
+        $mitigation = Mitigation::find($id);
+        $mitigation->plan = $request->input('plan');
+        $mitigation->save();
+
+        return ;
     }
 
     /**
@@ -60,6 +81,21 @@ class MitigationsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        if(!$id){
+            return response()->json([
+                'message' => 'ID is required'
+            ], 400);
+        }
+
+        $result = Mitigation::destroy($id);
+
+        if(!$result){
+            return response()->json([
+                'message' => 'Failed to delete'
+            ], 400);
+        }
+
+        return ;
     }
 }
