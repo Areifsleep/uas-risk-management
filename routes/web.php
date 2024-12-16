@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IdentificationsController;
 use App\Http\Controllers\MitigationsController;
 use App\Http\Controllers\MonitoringController;
@@ -21,9 +22,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(["auth"])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class,"index"])->name('dashboard');
 
     Route::get('/risks', [RiskController::class, 'index'])->name('risks.index');
     Route::get('/risks/{id}', [RiskController::class, 'show'])->name('risks.show');

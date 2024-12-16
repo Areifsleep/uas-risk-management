@@ -65,9 +65,4 @@ class User extends Authenticatable
         return $this->hasMany(Risk::class, 'updated_by');
     }
 
-    public function risksApproved()
-    {
-        return $this->hasMany(Risk::class, 'approved_by');
-    }
-
 }

@@ -23,13 +23,13 @@ class RiskController extends Controller
         $current_user = User::find($current_auth->id);
 
         $risks_query = Risk::with([
-            'creator', 'updater', 'approver', 'faculty', 'likelihood', 'impact'
+            'creator', 'updater', 'faculty', 'likelihood', 'impact'
         ]);
 
         if ($current_user->hasRole(RoleEnum::SuperAdmin) || $current_user->hasRole(RoleEnum::Rektor)) {
-            $risks_query = $risks_query->where('is_approved', true)->get();
+            $risks_query = $risks_query->get();
         } else {
-            $risks_query = $risks_query->where('is_approved', true)->where('faculties_id',$current_user->faculties_id)->get();
+            $risks_query = $risks_query->where('faculties_id',$current_user->faculties_id)->get();
         }
 
         $risks = RiskResource::collection($risks_query)->toArray(request());
@@ -69,7 +69,7 @@ class RiskController extends Controller
     {
 
         $risk = Risk::with([
-            'creator', 'updater', 'approver', 'faculty', 'likelihood', 'impact'
+            'creator', 'updater', 'faculty', 'likelihood', 'impact'
         ])->find($id);
 
         if(!$risk){

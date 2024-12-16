@@ -1,8 +1,8 @@
 import { DashboardLayout } from "@/Layouts/DashboardLayout";
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
-import { createGreetingMessage } from "@/lib/utils";
+import { cn, createGreetingMessage } from "@/lib/utils";
 import RiskMatrixCanvas from "@/RiskMatrixCanvas";
 
 import {
@@ -17,57 +17,24 @@ import { hasRole } from "@/utils/HasRole";
 import { Alert, AlertDescription, AlertTitle } from "@/Components/ui/alert";
 import { AlertCircle, BarChart3, Bell, School2, ShieldAlert } from "lucide-react";
 import { Button } from "@/Components/ui/button";
-
-const riskData = [
-  {
-    id: 1,
-    name: "Ac Mati",
-    description: "Panas Cik",
-    owner: "FST",
-    likelihood: 4,
-    impact: 4,
-    riskLevel: 4,
-  },
-  {
-    id: 2,
-    name: "Server Down",
-    description: "Layanan Terganggu",
-    owner: "IT",
-    likelihood: 3,
-    impact: 5,
-    riskLevel: 5,
-  },
-  {
-    id: 3,
-    name: "Data Breach",
-    description: "Kebocoran Informasi",
-    owner: "Security",
-    likelihood: 2,
-    impact: 5,
-    riskLevel: 4,
-  },
-  {
-    id: 4,
-    name: "Budget Overrun",
-    description: "Pengeluaran Melebihi Anggaran",
-    owner: "Finance",
-    likelihood: 3,
-    impact: 3,
-    riskLevel: 3,
-  },
-  {
-    id: 5,
-    name: "Staff Shortage",
-    description: "Kekurangan Personel",
-    owner: "HR",
-    likelihood: 2,
-    impact: 4,
-    riskLevel: 3,
-  },
-];
+import { likelihoodColorMapping, mappingValueLevel } from "@/Constants/LikelihoodColorMapping";
+import { PageProps } from "@/types";
+import { RisksType } from "@/types/risks";
+import { Empty } from "@/Components/Empty";
 
 export default function Dashboard() {
-  const props = usePage().props;
+  const props = usePage<
+    PageProps<{
+      recently_risks: RisksType;
+    }>
+  >().props;
+  const onRowClick = (id: number) => {
+    router.visit(`/risks/${id}`, {
+      preserveScroll: false,
+    });
+  };
+
+  console.log(props.recently_risks);
   return (
     <DashboardLayout>
       <Head title="Dashboard" />
@@ -266,8 +233,9 @@ export default function Dashboard() {
       </div>
       <div className="pt-5">
         <Card>
-          <CardHeader>
-            <CardTitle>Resiko Approved Terbaru</CardTitle>
+          <CardHeader className="flex justify-between flex-row items-center">
+            <CardTitle className="text-xl">Risiko 5 Terbaru</CardTitle>
+            <Button onClick={() => router.visit("/identifications")}>Input Risiko</Button>
           </CardHeader>
           <CardContent>
             <Table>
@@ -276,36 +244,77 @@ export default function Dashboard() {
                   <TableHead>ID</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead>Description</TableHead>
+                  <TableHead>Fakultas</TableHead>
                   <TableHead>Owner</TableHead>
-                  <TableHead>Likelihood</TableHead>
-                  <TableHead>Impact</TableHead>
-                  <TableHead>Risk Level</TableHead>
+                  <TableHead className="text-center">Likelihood</TableHead>
+                  <TableHead className="text-center">Impact</TableHead>
+                  <TableHead className="text-center">Risk Level</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {riskData.map((risk) => (
-                  <TableRow key={risk.id}>
-                    <TableCell>{risk.id}</TableCell>
-                    <TableCell>{risk.name}</TableCell>
-                    <TableCell>{risk.description}</TableCell>
-                    <TableCell>{risk.owner}</TableCell>
-                    <TableCell>
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
-                        {risk.likelihood}
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
-                        {risk.impact}
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-red-600">
-                        {risk.riskLevel}
-                      </span>
+                {props.recently_risks.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={8}>
+                      <Empty
+                        title="Tidak ada data risiko untuk saat ini"
+                        withButton
+                        message="Bagus sekali! Tidak ada risiko yang perlu dikhawatirkan."
+                        handleCreate={() => router.visit("/risks/create")}
+                        textButton="Buat Risiko"
+                      />
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  props.recently_risks.map((risk) => (
+                    <TableRow
+                      key={risk.id}
+                      className="cursor-pointer hover:bg-gray-100"
+                      onClick={() => onRowClick(risk.id)}
+                    >
+                      <TableCell>{risk.id}</TableCell>
+                      <TableCell>{risk.name}</TableCell>
+                      <TableCell>{risk.description}</TableCell>
+                      <TableCell>{risk.faculties.short_name}</TableCell>
+                      <TableCell>{risk.creator.name}</TableCell>
+                      <TableCell>
+                        <div className="flex justify-center h-full items-center">
+                          <span
+                            className={cn(
+                              "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                              likelihoodColorMapping[risk.likelihood.rating].color
+                            )}
+                          >
+                            {risk.likelihood.rating}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex justify-center h-full items-center">
+                          <span
+                            className={cn(
+                              "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                              likelihoodColorMapping[risk.impact.rating]?.color
+                            )}
+                          >
+                            {risk.impact.rating}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex justify-center h-full items-center">
+                          <span
+                            className={cn(
+                              "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                              mappingValueLevel(parseInt(risk.level_risk)).color
+                            )}
+                          >
+                            {risk.level_risk}
+                          </span>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </CardContent>

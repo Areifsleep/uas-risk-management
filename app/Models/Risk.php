@@ -41,11 +41,6 @@ class Risk extends Model
         return $this->belongsTo(User::class, 'updated_by');
     }
 
-    public function approver()
-    {
-        return $this->belongsTo(User::class, 'approved_by');
-    }
-
     public function faculty()
     {
         return $this->belongsTo(Faculty::class, 'faculties_id');
