@@ -15,6 +15,6 @@ class RiskSeeder extends Seeder
     {
 
         // Menggunakan factory
-        Risk::factory()->count(10)->create();
+        Risk::factory()->count(5)->create();
     }
 }

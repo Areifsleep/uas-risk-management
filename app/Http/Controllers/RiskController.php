@@ -69,7 +69,7 @@ class RiskController extends Controller
     {
 
         $risk = Risk::with([
-            'creator', 'updater', 'faculty', 'likelihood', 'impact'
+            'creator', 'faculty', 'likelihood', 'impact'
         ])->find($id);
 
         if(!$risk){
@@ -140,7 +140,7 @@ class RiskController extends Controller
         }
 
         $risks = Risk::with([
-            'creator', 'updater', 'approver', 'faculty', 'likelihood', 'impact'
+            'creator', 'updater', 'faculty', 'likelihood', 'impact'
         ])->where('faculties_id', $fakultas_id)->get();
 
 

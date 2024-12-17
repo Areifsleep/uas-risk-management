@@ -27,8 +27,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get('/risks', [RiskController::class, 'index'])->name('risks.index');
     Route::get('/risks/{id}', [RiskController::class, 'show'])->name('risks.show');
 
-    Route::get('/identifications', [IdentificationsController::class, 'index'])->name('identifications.index');
-    Route::get('/monitoring', [MonitoringController::class, 'index'])->name('monitoring.index');
+    Route::get('/risk-register', [IdentificationsController::class, 'index'])->name('risk-register.index');
 });
 
 Route::middleware('auth')->group(function () {

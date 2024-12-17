@@ -235,7 +235,6 @@ export default function Dashboard() {
         <Card>
           <CardHeader className="flex justify-between flex-row items-center">
             <CardTitle className="text-xl">Risiko 5 Terbaru</CardTitle>
-            <Button onClick={() => router.visit("/identifications")}>Input Risiko</Button>
           </CardHeader>
           <CardContent>
             <Table>

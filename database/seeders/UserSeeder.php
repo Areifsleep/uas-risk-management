@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $admin = User::create([
-            'name' => 'admin',
+            'name' => 'Marvel',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('12345678'),
 
@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
         $admin->assignRole(RoleEnum::SuperAdmin);
 
         $rektor = User::create([
-            'name' => 'Prayogo Latupono',
+            'name' => 'Prayogo',
             'email' => "rektor@gmail.com",
             "password" => bcrypt('12345678')
         ]);
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
         $rektor->assignRole(RoleEnum::Rektor);
 
         $admin_fakultas = User::create([
-            'name' => 'fst',
+            'name' => 'Asep',
             'email' => "fst@gmail.com",
             "password" => bcrypt('12345678'),
             'faculties_id' => 1
