@@ -37,7 +37,6 @@ class DashboardController extends Controller
                 'total_fakultas' => 39
             ],
             'recently_risks' => $risks,
-            // 'data' => $data
         ]);
     }
 }

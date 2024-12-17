@@ -234,7 +234,7 @@ export default function Dashboard() {
       <div className="pt-5">
         <Card>
           <CardHeader className="flex justify-between flex-row items-center">
-            <CardTitle className="text-xl">Risiko 5 Terbaru</CardTitle>
+            <CardTitle className="text-xl">Laporan Risiko Terbaru</CardTitle>
           </CardHeader>
           <CardContent>
             <Table>

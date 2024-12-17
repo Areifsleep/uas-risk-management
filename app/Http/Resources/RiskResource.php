@@ -32,9 +32,9 @@ class RiskResource extends JsonResource
                 'email' => $this->creator->email,
             ],
             'updater' => [
-                'id' => $this->updater->id,
-                'name' => $this->updater->name,
-                'email' => $this->updater->email,
+                'id' => $this->updater->id ?? null,
+                'name' => $this->updater->name ?? null,
+                'email' => $this->updater->email ?? null,
             ],
             'likelihood' => $this->likelihood,
             'impact' => $this->impact,

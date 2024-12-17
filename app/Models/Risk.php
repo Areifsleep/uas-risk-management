@@ -13,18 +13,14 @@ class Risk extends Model
     protected $fillable = [
         'name',
         'description',
-        'potential_disadvantages',
-        'risk_source',
         'faculties_id',
-        'created_by',
-        'updated_by',
         'likelihood_id',
         'impact_id',
         'level_risk',
-    ];
-
-    protected $casts = [
-        'is_approved' => 'boolean',
+        'risk_source',
+        'potential_disadvantages',
+        'created_by',
+        'updated_by',
     ];
 
     // Menghubungkan ke user yang membuat (created_by)
