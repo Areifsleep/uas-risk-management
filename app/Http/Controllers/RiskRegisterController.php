@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class IdentificationsController extends Controller
+class RiskRegisterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('Identifications/Index');
+        return Inertia::render('RiskRegister/Index');
     }
 
     /**

@@ -258,7 +258,7 @@ export default function Dashboard() {
                         title="Tidak ada data risiko untuk saat ini"
                         withButton
                         message="Bagus sekali! Tidak ada risiko yang perlu dikhawatirkan."
-                        handleCreate={() => router.visit("/risks/create")}
+                        handleCreate={() => router.visit(route("risk-register.index"))}
                         textButton="Buat Risiko"
                       />
                     </TableCell>

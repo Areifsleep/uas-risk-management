@@ -1,11 +1,10 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\IdentificationsController;
 use App\Http\Controllers\MitigationsController;
-use App\Http\Controllers\MonitoringController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RiskController;
+use App\Http\Controllers\RiskRegisterController;
 use App\Models\Mitigation;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -27,7 +26,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get('/risks', [RiskController::class, 'index'])->name('risks.index');
     Route::get('/risks/{id}', [RiskController::class, 'show'])->name('risks.show');
 
-    Route::get('/risk-register', [IdentificationsController::class, 'index'])->name('risk-register.index');
+    Route::get('/risk-register', [RiskRegisterController::class, 'index'])->name('risk-register.index');
 });
 
 Route::middleware('auth')->group(function () {
