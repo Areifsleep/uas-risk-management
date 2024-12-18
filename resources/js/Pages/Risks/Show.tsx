@@ -99,55 +99,7 @@ export default function RiskDetail({ risk }: { risk: RiskById }) {
               </div>
             </CardContent>
           </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Risk Assessment</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold">Likelihood:</span>
-                  <div className="flex justify-center h-full items-center">
-                    <span
-                      className={cn(
-                        "inline-flex h-8 w-8 items-center justify-center rounded-full",
-                        likelihoodColorMapping[risk.likelihood.rating].color
-                      )}
-                    >
-                      {risk.likelihood.rating}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold">Impact:</span>
-                  <div className="flex justify-center h-full items-center">
-                    <span
-                      className={cn(
-                        "inline-flex h-8 w-8 items-center justify-center rounded-full",
-                        likelihoodColorMapping[risk.impact.rating].color
-                      )}
-                    >
-                      {risk.impact.rating}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold">Risk Level:</span>
-                  <div className="flex justify-center h-full items-center">
-                    <span
-                      className={cn(
-                        "inline-flex h-8 w-8 items-center justify-center rounded-full",
-                        mappingValueLevel(parseInt(risk.level_risk)).color
-                      )}
-                    >
-                      {risk.level_risk}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          
                 <Card>
                     <CardHeader>
                         <CardTitle>Risk Assessment</CardTitle>
