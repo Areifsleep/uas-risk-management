@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Resources\RiskResource;
 use App\Models\Faculty;
 use App\Models\Risk;
+use App\Models\Impact;
+use App\Models\Likelihood;
 use App\Models\User;
 use App\RoleEnum;
 use Illuminate\Http\Request;
@@ -103,9 +105,74 @@ class RiskController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
-        //
+{
+    // Cari risk berdasarkan ID, termasuk relasi yang dibutuhkan
+    // $risk = Risk::with([
+    //     'creator', 'updater', 'faculty', 'likelihood', 'impact'
+    // ])->find($id);
+
+    // // Jika risk tidak ditemukan, kembalikan 404
+    // if (!$risk) {
+    //     abort(404);
+    // }
+
+    // // Ambil ID pengguna yang sedang login
+    // $userId = Auth::id();
+    // $user = User::find($userId);
+
+    // // Jika pengguna tidak ditemukan, kembalikan 403
+    // if (!$user) {
+    //     abort(403, 'Kamu tidak memiliki akses untuk mengakses sumber daya ini');
+    // }
+
+    // // Periksa apakah user bukan super admin atau rektor dan mencoba mengakses data dari fakultas lain
+    // if (!$user->hasRole('super_admin') && !$user->hasRole('rektor')) {
+    //     if ($user->faculties_id !== $risk->faculties_id) {
+    //         abort(403, 'Kamu tidak memiliki akses untuk mengakses sumber daya ini');
+    //     }
+    // }
+
+    // //Data tambahan yang mungkin dibutuhkan untuk form edit (opsional)
+    // // $faculties = Faculty::all(); // Jika Anda ingin menampilkan daftar fakultas
+    // // $likelihoods = Likelihood::all(); // Jika Anda ingin menampilkan daftar likelihood
+    // // $impacts = Impact::all(); // Jika Anda ingin menampilkan daftar impact
+
+    // // Render halaman edit dengan data yang relevan
+    // return Inertia::render('Risks/Edit', [
+    //     'risk' => $risk,
+    //     // 'faculties' => $faculties,
+    //     // 'likelihoods' => $likelihoods,
+    //     // 'impacts' => $impacts,
+    // ]);
+    $curent_user_id = Auth::id();
+
+    $curent_user = User::find($curent_user_id);
+
+    if(!$curent_user){
+        return redirect()->route('login');
     }
+
+    $likelihood = Likelihood::all();
+    $impact = Impact::all();
+
+    $where = [];
+
+    if(!$curent_user->hasRole(RoleEnum::SuperAdmin) && !$curent_user->hasRole(RoleEnum::Rektor)){
+        
+        $where['id'] = $curent_user->faculties_id;
+    }
+
+    $faculties = Faculty::where($where)->get();
+    
+    return Inertia::render('RiskRegister/Index',[
+        'options' => [
+            'likelihoods' => $likelihood,
+            'impacts' => $impact,
+            'faculties' => $faculties,
+        ]
+    ]);
+}
+
 
     /**
      * Update the specified resource in storage.
