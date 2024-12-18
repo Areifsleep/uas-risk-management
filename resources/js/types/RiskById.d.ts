@@ -3,7 +3,7 @@ export interface RiskById {
     name: string;
     description: string;
     potential_disadvantages: string;
-    risk_source: string;
+    risk_source: "external"|"internal";
     level_risk: string;
     is_approved: boolean;
     created_at: string;

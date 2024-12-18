@@ -24,6 +24,7 @@ import {
 import MitigationRisks from "../Mitigations/Index";
 import { useConfirm } from "@/Hooks/useConfirm";
 import { log } from "console";
+import { riskSourceColorMapping } from "@/Constants/RiskSouceColorMapping";
 
 export default function RiskDetail({ risk }: { risk: RiskById }) {
   const riskData = risk;
@@ -147,6 +148,96 @@ export default function RiskDetail({ risk }: { risk: RiskById }) {
               </div>
             </CardContent>
           </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Risk Assessment</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid gap-4">
+                            <div className="flex items-center justify-between">
+                                <span className="font-semibold">
+                                    Likelihood:
+                                </span>
+                                <div className="flex justify-center h-full items-center">
+                                    <span
+                                        className={cn(
+                                            "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                                            likelihoodColorMapping[
+                                                risk.likelihood.rating
+                                            ].color
+                                        )}
+                                    >
+                                        {risk.likelihood.rating}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="font-semibold">Impact:</span>
+                                <div className="flex justify-center h-full items-center">
+                                    <span
+                                        className={cn(
+                                            "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                                            likelihoodColorMapping[
+                                                risk.impact.rating
+                                            ].color
+                                        )}
+                                    >
+                                        {risk.impact.rating}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="font-semibold">
+                                    Risk Level:
+                                </span>
+                                <div className="flex justify-center h-full items-center">
+                                    <span
+                                        className={cn(
+                                            "inline-flex h-8 w-8 items-center justify-center rounded-full",
+                                            mappingValueLevel(
+                                                parseInt(risk.level_risk)
+                                            ).color
+                                        )}
+                                    >
+                                        {risk.level_risk}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="font-semibold">
+                                    Risk Resource:
+                                </span>
+                                <div className="flex justify-center h-full items-center">
+                                    <span
+                                        className={cn(
+                                            "inline-flex p-1 px-2 items-center justify-center rounded-full",                                    
+                                            riskSourceColorMapping(
+                                                risk.risk_source
+                                            ).color
+                                        )}
+                                    >
+                                        {risk.risk_source}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="font-semibold">
+                                    Potential Disadvantages:
+                                </span>
+                                <div className="flex justify-center h-full items-center">
+                                    <span
+                                        className={cn(
+                                            "inline-flex p-1 items-center justify-center rounded-full",                                    
+                                            
+                                        )}
+                                    >
+                                        {risk.potential_disadvantages}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
 
           <div className="md:col-span-2">
             <MitigationRisks risk={risk} />
