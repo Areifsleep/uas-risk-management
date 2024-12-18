@@ -1,5 +1,5 @@
-import { Link } from "@inertiajs/react";
-import { ArrowLeft, User, Calendar, School2 } from "lucide-react";
+import { Link, router } from "@inertiajs/react";
+import { ArrowLeft, User, Calendar, School2, Pencil, PencilIcon, Trash2Icon } from "lucide-react";
 
 import { RiskById } from "@/types/RiskById";
 import { Button } from "@/Components/ui/button";
@@ -14,10 +14,24 @@ import {
 } from "@/Constants/LikelihoodColorMapping";
 
 import MitigationRisks from "../Mitigations/Index";
+import { useConfirm } from "@/Hooks/useConfirm";
+import { log } from "console";
 
 export default function RiskDetail({ risk }: { risk: RiskById }) {
     const riskData = risk;
+    const [DialogConfirm,confirm] = useConfirm("Hapus Risk?","Data yang sudah dihapus tidak dapat dikembalikan");
+    const handleDeleteRisk = async() => {
+        const ok = await confirm();
+        if (!ok) {
+            return;            
+        }
+        
+        router.delete(route('risk.destroy',risk.id));
+    };
     return (
+        <>
+
+        <DialogConfirm/>    
         <DashboardLayout>
             <Button variant="outline" className="mb-6" asChild>
                 <Link href={route("risks.index")}>
@@ -29,7 +43,7 @@ export default function RiskDetail({ risk }: { risk: RiskById }) {
                 <Card>
                     <CardHeader>
                         <CardTitle className="capitalize text-2xl font-bold">
-                            {riskData.name}
+                            {riskData.name}                            
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -64,6 +78,14 @@ export default function RiskDetail({ risk }: { risk: RiskById }) {
                                     Last Updated:
                                 </span>{" "}
                                 {FormatDate(riskData.updated_at)}
+                            </div>
+                            <div className="flex gap-1 justify-end">
+                                <Button>
+                                    <PencilIcon/>
+                                </Button>
+                                <Button variant="destructive" onClick={handleDeleteRisk}>
+                                    <Trash2Icon/>
+                                </Button>
                             </div>
                         </div>
                     </CardContent>
@@ -132,6 +154,6 @@ export default function RiskDetail({ risk }: { risk: RiskById }) {
                     <MitigationRisks risk={risk} />
                 </div>
             </div>
-        </DashboardLayout>
+        </DashboardLayout></>
     );
 }

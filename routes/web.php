@@ -28,6 +28,7 @@ Route::middleware(["auth"])->group(function () {
 
     Route::get('/risk-register', [RiskRegisterController::class, 'index'])->name('risk-register.index');
     Route::post('/risk-register', [RiskRegisterController::class, 'store'])->name('risk-register.store');
+    Route::delete('/risk-register/{id}',[RiskController::class, 'destroy'])->name('risk.destroy');
 });
 
 Route::middleware('auth')->group(function () {

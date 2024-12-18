@@ -120,7 +120,11 @@ class RiskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if(!$id){
+            return redirect()->route('login');
+        }
+        Risk::destroy($id);
+        return redirect()->route('risks.index');
     }
 
     public function showByFaculty(string $fakultas_id)
