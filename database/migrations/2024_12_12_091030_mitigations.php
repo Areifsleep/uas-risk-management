@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('mitigations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('risk_id')->constrained('risks');
+            $table->foreignId('risk_id')->constrained('risks')->onDelete('cascade');
             $table->string('plan');
             $table->timestamps();
         });

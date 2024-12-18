@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             LikelihoodSeeder::class,
             ImpactSeeder::class,
-            RiskSeeder::class,
+            // RiskSeeder::class,
         ]);
     }
 }

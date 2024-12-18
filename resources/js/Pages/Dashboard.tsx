@@ -1,7 +1,7 @@
 import { DashboardLayout } from "@/Layouts/DashboardLayout";
 import { Head, Link, router, usePage } from "@inertiajs/react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/Components/ui/card";
 import { cn, createGreetingMessage } from "@/lib/utils";
 import RiskMatrixCanvas from "@/RiskMatrixCanvas";
 
@@ -21,11 +21,18 @@ import { likelihoodColorMapping, mappingValueLevel } from "@/Constants/Likelihoo
 import { PageProps } from "@/types";
 import { RisksType } from "@/types/risks";
 import { Empty } from "@/Components/Empty";
+import { ChartJumlahRisiko } from "@/Components/ChartJumlahRisiko";
 
 export default function Dashboard() {
   const props = usePage<
     PageProps<{
       recently_risks: RisksType;
+      count: {
+        jumlah_risiko_tinggi: number;
+        rata_rata_likelihood: string;
+        total_risiko: number;
+        rata_rata_impact: string;
+      };
     }>
   >().props;
   const onRowClick = (id: number) => {
@@ -34,7 +41,6 @@ export default function Dashboard() {
     });
   };
 
-  console.log(props.recently_risks);
   return (
     <DashboardLayout>
       <Head title="Dashboard" />
@@ -71,18 +77,20 @@ export default function Dashboard() {
         </Alert>
       )}
       <div className="pt-5 grid grid-cols-12 gap-3 items-center">
-        <div className="w-full col-span-12 lg:col-span-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div className="w-full col-span-12 lg:col-span-6 h-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 h-full">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Overall Score</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Jumlah risiko yang memiliki level tinggi
+                </CardTitle>
                 <BarChart3 className="h-4 w-4 text-red-500" />
               </CardHeader>
-              <CardContent>
+              <CardContent className="mt-5">
                 <div className="flex items-center justify-center">
                   <div className="relative h-32 w-32">
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-4xl font-bold">1</span>
+                      <span className="text-4xl font-bold">{props.count.jumlah_risiko_tinggi}</span>
                     </div>
                     <svg
                       className="h-full w-full"
@@ -113,14 +121,18 @@ export default function Dashboard() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">High Risk Issues</CardTitle>
+                <CardTitle className="text-sm font-medium">
+                  Rata rata kemungkinan terjadi risiko
+                </CardTitle>
                 <ShieldAlert className="h-4 w-4 text-emerald-500" />
               </CardHeader>
-              <CardContent>
+              <CardContent className="mt-5">
                 <div className="flex items-center justify-center">
                   <div className="relative h-32 w-32">
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-4xl font-bold">2</span>
+                      <span className="text-4xl font-bold">
+                        {parseFloat(props.count.rata_rata_likelihood ?? "0").toFixed(2)}
+                      </span>
                     </div>
                     <svg
                       className="h-full w-full"
@@ -151,14 +163,14 @@ export default function Dashboard() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Risk</CardTitle>
+                <CardTitle className="text-sm font-medium">Total risiko</CardTitle>
                 <AlertCircle className="h-4 w-4 text-yellow-500" />
               </CardHeader>
-              <CardContent>
+              <CardContent className="mt-5">
                 <div className="flex items-center justify-center">
                   <div className="relative h-32 w-32">
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-4xl font-bold">3</span>
+                      <span className="text-4xl font-bold">{props.count.total_risiko}</span>
                     </div>
                     <svg
                       className="h-full w-full"
@@ -189,14 +201,16 @@ export default function Dashboard() {
             </Card>
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Total Program Studi</CardTitle>
+                <CardTitle className="text-sm font-medium">Rata rata impact</CardTitle>
                 <School2 className="h-4 w-4 text-green-500" />
               </CardHeader>
-              <CardContent>
+              <CardContent className="mt-5">
                 <div className="flex items-center justify-center">
                   <div className="relative h-32 w-32">
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-4xl font-bold">3</span>
+                      <span className="text-4xl font-bold">
+                        {parseFloat(props.count.rata_rata_impact ?? "0").toFixed(2)}
+                      </span>
                     </div>
                     <svg
                       className="h-full w-full"
@@ -227,8 +241,16 @@ export default function Dashboard() {
             </Card>
           </div>
         </div>
-        <Card className="w-full h-[450px] overflow-hidden col-span-12 lg:col-span-7">
-          <RiskMatrixCanvas />
+        <Card className="w-full col-span-12 lg:col-span-6">
+          <CardHeader>
+            <CardTitle className="text-xl">Data Tren Identifikasi Risiko Mingguan</CardTitle>
+            <CardDescription>
+              Data jumlah risiko yang teridentifikasi di universitas
+            </CardDescription>
+          </CardHeader>
+          <CardContent className=" h-full">
+            <ChartJumlahRisiko />
+          </CardContent>
         </Card>
       </div>
       <div className="pt-5">

@@ -12,4 +12,5 @@ class Likelihood extends Model
     {
         return $this->hasMany(Risk::class, 'likelihood_id');
     }
+
 }
