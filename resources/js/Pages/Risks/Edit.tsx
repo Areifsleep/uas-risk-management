@@ -19,7 +19,7 @@ const RiskEdit = (props: RiskEditProps) => {
     errors,
     setError,
     processing,
-    post,
+    patch,
     reset,
     clearErrors,
   } = useForm({
@@ -38,15 +38,12 @@ const RiskEdit = (props: RiskEditProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    post(route("risk-register.store"), {
+    patch(route("risks.update", { id: props.risks.id }), {
       onSuccess: () => {
-        reset();
-        clearErrors();
-
-        toast.success("Berhasil menambahkan data risiko");
+        toast.success("Berhasil Update data");
       },
       onError: () => {
-        toast.error("Gagal menambahkan data risiko");
+        toast.error("Gagal Update data");
       },
     });
   };

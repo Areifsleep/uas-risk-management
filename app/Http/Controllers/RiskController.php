@@ -116,34 +116,6 @@ class RiskController extends Controller
         abort(404);
     }
 
-    // // Ambil ID pengguna yang sedang login
-    // $userId = Auth::id();
-    // $user = User::find($userId);
-
-    // // Jika pengguna tidak ditemukan, kembalikan 403
-    // if (!$user) {
-    //     abort(403, 'Kamu tidak memiliki akses untuk mengakses sumber daya ini');
-    // }
-
-    // // Periksa apakah user bukan super admin atau rektor dan mencoba mengakses data dari fakultas lain
-    // if (!$user->hasRole('super_admin') && !$user->hasRole('rektor')) {
-    //     if ($user->faculties_id !== $risk->faculties_id) {
-    //         abort(403, 'Kamu tidak memiliki akses untuk mengakses sumber daya ini');
-    //     }
-    // }
-
-    // //Data tambahan yang mungkin dibutuhkan untuk form edit (opsional)
-    // // $faculties = Faculty::all(); // Jika Anda ingin menampilkan daftar fakultas
-    // // $likelihoods = Likelihood::all(); // Jika Anda ingin menampilkan daftar likelihood
-    // // $impacts = Impact::all(); // Jika Anda ingin menampilkan daftar impact
-
-    // // Render halaman edit dengan data yang relevan
-    // return Inertia::render('Risks/Edit', [
-    //     'risk' => $risk,
-    //     // 'faculties' => $faculties,
-    //     // 'likelihoods' => $likelihoods,
-    //     // 'impacts' => $impacts,
-    // ]);
     $curent_user_id = Auth::id();
 
     $curent_user = User::find($curent_user_id);
@@ -180,7 +152,64 @@ class RiskController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $current_user_id = Auth::id();
+        $current_user = User::find($current_user_id);
+    
+        if (!$current_user) {
+            return redirect()->route('login');
+        }
+    
+        // Validate the request input
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'faculty_id' => 'required',
+            'likelihood_id' => 'required',
+            'impact_id' => 'required',
+            'level_risk' => 'required',
+            'risk_source' => 'required',
+            'potential_disadvantages' => 'required',
+        ], [
+            'name.required' => 'Nama Risiko harus diisi',
+            'description.required' => 'Deskripsi Risiko harus diisi',
+            'faculty_id.required' => 'Fakultas harus diisi',
+            'likelihood_id.required' => 'Likelihood harus diisi',
+            'impact_id.required' => 'Impact harus diisi',
+            'level_risk.required' => 'Tingkat Risiko harus diisi',
+            'risk_source.required' => 'Sumber Risiko harus diisi',
+            'potential_disadvantages.required' => 'Potensi kerugian harus diisi',
+        ]);
+    
+        // Find the risk to be updated
+        $risk = Risk::find($id);
+    
+        if (!$risk) {
+            abort(404);
+        }
+    
+        // Ensure the user has access to edit the risk (role check)
+        if (!$current_user->hasRole(RoleEnum::SuperAdmin) && !$current_user->hasRole(RoleEnum::Rektor)) {
+            if ($current_user->faculties_id !== $risk->faculties_id) {
+                abort(403, 'Kamu tidak memiliki akses untuk mengakses sumber daya ini');
+            }
+        }
+    
+        // Update the risk with new values
+        $risk->name = $request->name;
+        $risk->description = $request->description;
+        $risk->faculties_id = $request->faculty_id;
+        $risk->likelihood_id = $request->likelihood_id;
+        $risk->impact_id = $request->impact_id;
+        $risk->level_risk = $request->level_risk;
+        $risk->risk_source = $request->risk_source;
+        $risk->potential_disadvantages = $request->potential_disadvantages;
+        $risk->updated_by = $current_user_id;
+    
+        // Save the updated risk
+        $risk->save();
+    
+        // Redirect to the updated risk page
+        return redirect()->route('risks.show', $risk->id);
     }
 
     /**
