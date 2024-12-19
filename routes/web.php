@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(["auth"])->group(function () {
-    Route::get('/dashboard', [DashboardController::class,"index"])->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::get('/risks', [RiskController::class, 'index'])->name('risks.index');
     Route::get('/risks/{id}', [RiskController::class, 'show'])->name('risks.show');
@@ -43,8 +43,9 @@ Route::middleware(['auth','role:super_admin|rektor'])->group(function(){
     Route::get('/risks/fakultas/{fakultas_id}',[RiskController::class,'showByFaculty'])->name('risks.show_by_fakultas');
 });
 
-// Api Routes
 
+
+// Api Routes
 Route::middleware('auth')->group(function () {
    Route::get('/mitigations', function (Request $request) {
     $risk_id = $request->query('risk_id');

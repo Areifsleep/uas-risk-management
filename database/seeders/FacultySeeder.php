@@ -19,7 +19,7 @@ class FacultySeeder extends Seeder
             ['name' => 'Sains Dan Teknologi', 'short_name' => 'FST', ],
             ['name' => 'Adab dan Ilmu Budaya', 'short_name' => 'ADAB', ],
             ['name' => 'Dakwah dan Komunikasi', 'short_name' => 'DAKOM', ],
-            ['name' => 'Tarbiyah dan Keguruan', 'short_name' => 'TARBIYAH', ],
+            ['name' => 'Tarbiyah dan Keguruan', 'short_name' => 'FTIK', ],
             ['name' => 'Ilmu Sosial dan Humaniora', 'short_name' => 'SOSHUM', ],
             ['name' => 'Ekonomi dan Bisnis Islam', 'short_name' => 'FEBI', ],
         ];

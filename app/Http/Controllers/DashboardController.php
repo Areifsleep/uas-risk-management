@@ -7,13 +7,20 @@ use App\Models\Risk;
 use App\Models\User;
 use App\RoleEnum;
 use Carbon\Carbon;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-    public function index()
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    public function __invoke()
     {
         Carbon::setLocale('id');
 
@@ -25,9 +32,9 @@ class DashboardController extends Controller
         ]);
 
         if ($current_user->hasRole(RoleEnum::SuperAdmin) || $current_user->hasRole(RoleEnum::Rektor)) {
-            $risks_query = $risks_query->latest()->take(5)->get();
+            $risks_query = $risks_query->orderBy('id','desc')->take(5)->get();
         } else {
-            $risks_query = $risks_query->where('faculties_id',$current_user->faculties_id)->latest()->take(5)->get();
+            $risks_query = $risks_query->where('faculties_id',$current_user->faculties_id)->orderBy('id','desc')->take(5)->get();
         }
 
         $risks = RiskResource::collection($risks_query)->toArray(request());

@@ -14,16 +14,38 @@ use Inertia\Inertia;
 
 class RiskRegisterController extends Controller
 {
+
+    private function getCurrentUser () {
+        $current_auth = Auth::id();
+        return User::find($current_auth);
+    }
+
+    private function createRisk(Request $request, $userId){
+        $risk = new Risk();
+
+        $risk->name = $request->name;
+        $risk->description = $request->description;
+        $risk->faculties_id = $request->faculty_id;
+        $risk->likelihood_id = $request->likelihood_id;
+        $risk->impact_id = $request->impact_id;
+        $risk->level_risk = $request->level_risk;
+        $risk->risk_source = $request->risk_source;
+        $risk->potential_disadvantages = $request->potential_disadvantages;
+        $risk->created_by = $userId;
+        $risk->updated_by = $userId;
+
+        $risk->save();
+
+        return $risk;
+    }
+
     /**
      * Display a listing of the resource.
      */
 
-    
     public function index()
     {
-        $curent_user_id = Auth::id();
-
-        $curent_user = User::find($curent_user_id);
+        $curent_user = $this->getCurrentUser();
 
         if(!$curent_user){
             return redirect()->route('login');
@@ -55,8 +77,7 @@ class RiskRegisterController extends Controller
      */
     public function store(Request $request)
     {
-        $curent_user_id = Auth::id();
-        $curent_user = User::find($curent_user_id);
+        $curent_user = $this->getCurrentUser();
 
         if(!$curent_user){
             return redirect()->route('login');
@@ -82,45 +103,8 @@ class RiskRegisterController extends Controller
             'potential_disadvantages.required' => 'Potensi kerugian harus diisi',
         ]);
 
-        $risk = new Risk();
-
-        $risk->name = $request->name;
-        $risk->description = $request->description;
-        $risk->faculties_id = $request->faculty_id;
-        $risk->likelihood_id = $request->likelihood_id;
-        $risk->impact_id = $request->impact_id;
-        $risk->level_risk = $request->level_risk;
-        $risk->risk_source = $request->risk_source;
-        $risk->potential_disadvantages = $request->potential_disadvantages;
-        $risk->created_by = $curent_user_id;
-        $risk->updated_by = $curent_user_id;
-
-        $risk->save();
+        $risk = $this->createRisk($request, $curent_user->id);
 
         return redirect()->route('risks.show',$risk->id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

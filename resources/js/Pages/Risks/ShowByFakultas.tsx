@@ -11,7 +11,7 @@ import {
 } from "@/Components/ui/table";
 
 import { Button } from "@/Components/ui/button";
-import { router } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import { Empty } from "@/Components/Empty";
 import { cn } from "@/lib/utils";
 import { likelihoodColorMapping, mappingValueLevel } from "@/Constants/LikelihoodColorMapping";
@@ -53,6 +53,7 @@ export default function ShowByFakultas({
 
   return (
     <DashboardLayout>
+      <Head title={`Daftar Risiko ${fakultas.name}`} />
       <Card>
         <CardHeader className="flex justify-between flex-row items-center">
           <CardTitle className="text-xl">Daftar Risiko {fakultas.name}</CardTitle>

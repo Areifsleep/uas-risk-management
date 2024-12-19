@@ -48,6 +48,9 @@ export default function Dashboard() {
         <p className="text-3xl font-bold capitalize">
           {createGreetingMessage(props.auth.user.name)}
         </p>
+        {hasRole("admin_fakultas") && <p>Anda adalah Admin Fakultas</p>}
+        {hasRole("rektor") && <p>Anda adalah Rektor</p>}
+        {hasRole("super_admin") && <p>Anda adalah Super Admin</p>}
       </div>
       {hasRole("super_admin") && (
         <Alert
