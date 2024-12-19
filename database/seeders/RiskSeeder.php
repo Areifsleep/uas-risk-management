@@ -16,13 +16,13 @@ class RiskSeeder extends Seeder
     public function run()
     {
         // Menentukan jumlah risk yang akan dibuat per hari
-        $this->createRisksForDay(1, 10); // 20 risk untuk hari Senin
-        $this->createRisksForDay(2, 5); // 30 risk untuk hari Selasa
-        $this->createRisksForDay(3, 15); // 40 risk untuk hari Rabu
+        $this->createRisksForDay(1, 1); // 20 risk untuk hari Senin
+        $this->createRisksForDay(2, 2); // 30 risk untuk hari Selasa
+        $this->createRisksForDay(3, 1); // 40 risk untuk hari Rabu
         $this->createRisksForDay(4, 22); // 50 risk untuk hari Kamis
-        $this->createRisksForDay(5, 1); // 60 risk untuk hari Jumat
+        $this->createRisksForDay(5, 0); // 60 risk untuk hari Jumat
         $this->createRisksForDay(6, 0); // 70 risk untuk hari Sabtu
-        $this->createRisksForDay(7, 45); // 80 risk untuk hari Minggu
+        $this->createRisksForDay(7, 0); // 80 risk untuk hari Minggu
     }
 
     /**
