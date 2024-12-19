@@ -66,8 +66,9 @@ export default function LandingPage({
               </h1>
               <div className="max-w-md mx-auto">
                 <p className="text-xs md:text-sm lg:text-base text-muted-foreground">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, provident omnis
-                  assumenda, veniam sint quod iusto voluptates magnam dolorum, eaque aliquid.
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam, provident omnis assumenda, veniam sint quod iusto
+                  voluptates magnam dolorum, eaque aliquid.
                 </p>
               </div>
               <div className="my-5">
@@ -88,13 +89,11 @@ export default function LandingPage({
           <h2 className="text-center text-4xl font-bold">Contributors</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 lg:grid-cols-4 my-10 max-w-[1400px] mx-auto">
             {anggotaKelompok.map((anggota) => (
-              <div
-                className="space-y-2"
-                key={anggota.nim}
-              >
+              <div className="space-y-2" key={anggota.nim}>
                 <img
                   className="size-64 mx-auto rounded-full aspect-square border-2 border-primary"
-                  src="https://asset.kompas.com/crops/ifW7Xih6xKcXa6cFH3V-JjO_rWA=/164x26:1193x712/750x500/data/photo/2022/10/17/634d7264eeb1a.png"
+                  src={anggota.image}
+                  alt={anggota.name}
                 />
                 <div className="text-center">
                   <h3 className="text-lg font-bold">{anggota.name}</h3>
@@ -109,7 +108,8 @@ export default function LandingPage({
       <footer className="bg-background h-14">
         <div className="max-w-[1400px] h-full mx-auto flex items-center justify-center border-t">
           <p>
-            &copy; {new Date().getFullYear()} by <span className="font-bold">Masako</span> team
+            &copy; {new Date().getFullYear()} by{" "}
+            <span className="font-bold">Masako</span> team
           </p>
         </div>
       </footer>
