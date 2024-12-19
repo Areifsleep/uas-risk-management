@@ -10,7 +10,16 @@ import { Button } from "@/Components/ui/button";
 import { RiskRegisterProps } from "@/types/RiskRegisterProps";
 
 const identificationsPage = (props: RiskRegisterProps) => {
-  const { data, setData, errors, setError, processing, post, reset, clearErrors } = useForm({
+  const {
+    data,
+    setData,
+    errors,
+    setError,
+    processing,
+    post,
+    reset,
+    clearErrors,
+  } = useForm({
     name: "",
     description: "",
     faculty_id: "",
@@ -41,7 +50,9 @@ const identificationsPage = (props: RiskRegisterProps) => {
     const likelihood = props.options.likelihoods.find(
       (item) => item.id === Number(data.likelihood_id)
     );
-    const impact = props.options.impacts.find((item) => item.id === Number(data.impact_id));
+    const impact = props.options.impacts.find(
+      (item) => item.id === Number(data.impact_id)
+    );
 
     if (likelihood && impact) {
       const levelRisk = likelihood.rating * impact.rating;
@@ -56,12 +67,11 @@ const identificationsPage = (props: RiskRegisterProps) => {
       <Head title="Risk Register" />
       <DashboardLayout>
         <div className="w-full h-full flex items-center justify-center">
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-5 w-full"
-          >
+          <form onSubmit={handleSubmit} className="space-y-5 w-full">
             <div>
-              <h1 className="text-2xl font-semibold mb-3">Identifikasi Risiko</h1>
+              <h1 className="text-2xl font-semibold mb-3">
+                Identifikasi Risiko
+              </h1>
               <div className="flex flex-col gap-4">
                 <Input
                   type="text"
@@ -126,7 +136,9 @@ const identificationsPage = (props: RiskRegisterProps) => {
               </div>
             </div>
             <div>
-              <h1 className="text-2xl font-semibold mb-3">Nilai Inherent Risiko</h1>
+              <h1 className="text-2xl font-semibold mb-3">
+                Nilai Inherent Risiko
+              </h1>
               <div className="flex flex-col md:flex-row gap-4">
                 <Select
                   label="Likelihood"
@@ -151,7 +163,9 @@ const identificationsPage = (props: RiskRegisterProps) => {
                         textValue={`[${likelihod.rating}] ${likelihod.label} - ${likelihod.precentage_range}`}
                       >
                         <div className="flex gap-x-2">
-                          <span className="font-bold">[{likelihod.rating}]</span>
+                          <span className="font-bold">
+                            [{likelihod.rating}]
+                          </span>
                           {likelihod.label} ({likelihod.precentage_range})
                         </div>
                       </SelectItem>
@@ -228,10 +242,7 @@ const identificationsPage = (props: RiskRegisterProps) => {
                   }}
                 >
                   {(item) => (
-                    <SelectItem
-                      key={item.value}
-                      textValue={item.label}
-                    >
+                    <SelectItem key={item.value} textValue={item.label}>
                       {item.label}
                     </SelectItem>
                   )}

@@ -1,261 +1,18 @@
-// import React, { useState } from "react";
-// import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
-// import { DashboardLayout } from "@/Layouts/DashboardLayout";
-// import { Head } from "@inertiajs/react";
-// import {
-//     Table,
-//     TableBody,
-//     TableCell,
-//     TableHeader,
-//     TableHead,
-//     TableRow,
-// } from "@/Components/ui/table";
-// import { Button } from "@/Components/ui/button";
-// import { RiskById } from "@/types/RiskById";
-
-// export default function RiskEdit({ risk }: { risk: RiskById }) {
-//     const [riskData, setRiskData] = useState({ ...risk });
-
-//     const handleSubmit = async () => {
-//         if (
-//             !riskData.name ||
-//             Number(riskData.likelihood) === 0 ||
-//             Number(riskData.impact) === 0
-//         ) {
-//             alert("Please fill out all required fields");
-//             return;
-//         }
-
-//         try {
-//             const response = await fetch("/api/update-risk", {
-//                 method: "POST",
-//                 headers: { "Content-Type": "application/json" },
-//                 body: JSON.stringify(riskData),
-//             });
-
-//             if (response.ok) {
-//                 console.log("Risk updated successfully");
-//             } else {
-//                 console.error("Failed to update risk");
-//             }
-//         } catch (error) {
-//             console.error("Error submitting risk data:", error);
-//         }
-//     };
-
-//     const handleInputChange = (field: string, value: string | number) => {
-//         setRiskData((prevData) => ({
-//             ...prevData,
-//             [field]: value,
-//         }));
-//     };
-
-//     return (
-//         <>
-//             <Head title="Edit Risks" />
-//             <DashboardLayout>
-//                 <div className="flex flex-col gap-5">
-//                     <Card>
-//                         <CardHeader>
-//                             <CardTitle>Edit Risk Details</CardTitle>
-//                         </CardHeader>
-//                         <CardContent>
-//                             <Table>
-//                                 <TableHeader>
-//                                     <TableRow>
-//                                         <TableHead>ID</TableHead>
-//                                         <TableHead>Name</TableHead>
-//                                         <TableHead>Description</TableHead>
-//                                         <TableHead>
-//                                             Potential Disadvantages
-//                                         </TableHead>
-//                                         <TableHead>Risk Source</TableHead>
-//                                         <TableHead>Level Risk</TableHead>
-//                                         <TableHead>Faculty</TableHead>
-//                                         <TableHead>Likelihood</TableHead>
-//                                         <TableHead>Impact</TableHead>
-//                                     </TableRow>
-//                                 </TableHeader>
-//                                 <TableBody>
-//                                     <TableRow key={riskData.id}>
-//                                         <TableCell>{riskData.id}</TableCell>
-//                                         <TableCell>
-//                                             <input
-//                                                 type="text"
-//                                                 value={riskData.name}
-//                                                 onChange={(e) =>
-//                                                     handleInputChange(
-//                                                         "name",
-//                                                         e.target.value
-//                                                     )
-//                                                 }
-//                                                 className="w-full border px-2 py-1"
-//                                             />
-//                                         </TableCell>
-//                                         <TableCell>
-//                                             <input
-//                                                 type="text"
-//                                                 value={
-//                                                     riskData.description || ""
-//                                                 }
-//                                                 onChange={(e) =>
-//                                                     handleInputChange(
-//                                                         "description",
-//                                                         e.target.value
-//                                                     )
-//                                                 }
-//                                                 className="w-full border px-2 py-1"
-//                                             />
-//                                         </TableCell>
-//                                         <TableCell>
-//                                             <input
-//                                                 type="text"
-//                                                 value={
-//                                                     riskData.potential_disadvantages ||
-//                                                     ""
-//                                                 }
-//                                                 onChange={(e) =>
-//                                                     handleInputChange(
-//                                                         "potential_disadvantages",
-//                                                         e.target.value
-//                                                     )
-//                                                 }
-//                                                 className="w-full border px-2 py-1"
-//                                             />
-//                                         </TableCell>
-//                                         <TableCell>
-//                                             <select
-//                                                 value={riskData.risk_source}
-//                                                 onChange={(e) =>
-//                                                     handleInputChange(
-//                                                         "risk_source",
-//                                                         e.target.value
-//                                                     )
-//                                                 }
-//                                                 className="w-full border px-2 py-1"
-//                                             >
-//                                                 <option value="internal">
-//                                                     Internal
-//                                                 </option>
-//                                                 <option value="external">
-//                                                     External
-//                                                 </option>
-//                                             </select>
-//                                         </TableCell>
-//                                         <TableCell>
-//                                             <input
-//                                                 type="text"
-//                                                 value={riskData.level_risk}
-//                                                 onChange={(e) =>
-//                                                     handleInputChange(
-//                                                         "level_risk",
-//                                                         e.target.value
-//                                                     )
-//                                                 }
-//                                                 className="w-full border px-2 py-1"
-//                                             />
-//                                         </TableCell>
-//                                         <TableCell>
-//                                             <select
-//                                                 value={
-//                                                     riskData.faculties_id || ""
-//                                                 }
-//                                                 onChange={(e) =>
-//                                                     handleInputChange(
-//                                                         "faculties_id",
-//                                                         e.target.value
-//                                                     )
-//                                                 }
-//                                                 className="w-full border px-2 py-1"
-//                                             >
-//                                                 <option value="">
-//                                                     Select Faculty
-//                                                 </option>
-//                                                 {faculties.map((faculty) => (
-//                                                     <option
-//                                                         key={faculty.id}
-//                                                         value={faculty.id}
-//                                                     >
-//                                                         {faculty.name}
-//                                                     </option>
-//                                                 ))}
-//                                             </select>
-//                                         </TableCell>
-//                                         <TableCell>
-//                                             <select
-//                                                 value={
-//                                                     riskData.likelihood_id || ""
-//                                                 }
-//                                                 onChange={(e) =>
-//                                                     handleInputChange(
-//                                                         "likelihood_id",
-//                                                         e.target.value
-//                                                     )
-//                                                 }
-//                                                 className="w-full border px-2 py-1"
-//                                             >
-//                                                 <option value="">
-//                                                     Select Likelihood
-//                                                 </option>
-//                                                 {likelihoods.map((item) => (
-//                                                     <option
-//                                                         key={item.id}
-//                                                         value={item.id}
-//                                                     >
-//                                                         {item.name}
-//                                                     </option>
-//                                                 ))}
-//                                             </select>
-//                                         </TableCell>
-//                                         <TableCell>
-//                                             <select
-//                                                 value={riskData.impact_id || ""}
-//                                                 onChange={(e) =>
-//                                                     handleInputChange(
-//                                                         "impact_id",
-//                                                         e.target.value
-//                                                     )
-//                                                 }
-//                                                 className="w-full border px-2 py-1"
-//                                             >
-//                                                 <option value="">
-//                                                     Select Impact
-//                                                 </option>
-//                                                 {impacts.map((item) => (
-//                                                     <option
-//                                                         key={item.id}
-//                                                         value={item.id}
-//                                                     >
-//                                                         {item.name}
-//                                                     </option>
-//                                                 ))}
-//                                             </select>
-//                                         </TableCell>
-//                                     </TableRow>
-//                                 </TableBody>
-//                             </Table>
-//                             <Button onClick={handleSubmit} className="mt-4">
-//                                 Save Changes
-//                             </Button>
-//                         </CardContent>
-//                     </Card>
-//                 </div>
-//             </DashboardLayout>
-//         </>
-//     );
-// }
 import { toast } from "sonner";
 import { useEffect } from "react";
 import { Input } from "@nextui-org/input";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { Select, SelectItem } from "@nextui-org/select";
 
 import { DashboardLayout } from "@/Layouts/DashboardLayout";
 import { Button } from "@/Components/ui/button";
 
 import { RiskRegisterProps } from "@/types/RiskRegisterProps";
+import { RisksType } from "@/types/risks";
+import { RiskEditProps } from "@/types/RiskEditProps";
+import { ArrowLeft } from "lucide-react";
 
-const RiskEdit = (props: RiskRegisterProps) => {
+const RiskEdit = (props: RiskEditProps) => {
   const {
     data,
     setData,
@@ -266,14 +23,17 @@ const RiskEdit = (props: RiskRegisterProps) => {
     reset,
     clearErrors,
   } = useForm({
-    name: "",
-    description: "",
-    faculty_id: "",
-    likelihood_id: "",
-    impact_id: "",
-    level_risk: "0",
-    risk_source: "",
-    potential_disadvantages: "",
+    name: props.risks.name || "",
+    description: props.risks.description || "",
+    faculty_id: props.risks.faculties_id.toString() || "",
+    likelihood_id: props.risks.likelihood_id.toString() || "",
+    impact_id: props.risks.impact_id.toString() || "",
+    level_risk:
+      /* props.risk?.level_risk ? props.risk.level_risk.toString() :  */ "0",
+    risk_source: props.risks.risk_source || "",
+    potential_disadvantages: props.risks.potential_disadvantages
+      ? props.risks.potential_disadvantages.toString()
+      : "",
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -308,10 +68,19 @@ const RiskEdit = (props: RiskRegisterProps) => {
     }
   }, [data.likelihood_id, data.impact_id]);
 
+  console.log(data);
+
   return (
     <>
       <Head title="Risk Register" />
       <DashboardLayout>
+        <div className="flex items-center justify-between">
+          <Button variant="outline" className="mb-6" asChild>
+            <Link href={route("risks.show", { id: props.risks.id })}>
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to List
+            </Link>
+          </Button>
+        </div>
         <div className="w-full h-full flex items-center justify-center">
           <form onSubmit={handleSubmit} className="space-y-5 w-full">
             <div>
@@ -361,6 +130,7 @@ const RiskEdit = (props: RiskRegisterProps) => {
                   isInvalid={!!errors.faculty_id}
                   errorMessage={errors.faculty_id}
                   value={data.faculty_id}
+                  defaultSelectedKeys={data.faculty_id ? [data.faculty_id] : []}
                   onChange={(e) => {
                     setData("faculty_id", e.target.value);
                     if (errors.faculty_id) {
@@ -395,6 +165,9 @@ const RiskEdit = (props: RiskRegisterProps) => {
                   isInvalid={!!errors.likelihood_id}
                   errorMessage={errors.likelihood_id}
                   value={data.likelihood_id}
+                  defaultSelectedKeys={
+                    data.likelihood_id ? [data.likelihood_id] : []
+                  }
                   onChange={(e) => {
                     setData("likelihood_id", e.target.value);
                     if (errors.likelihood_id) {
@@ -427,6 +200,7 @@ const RiskEdit = (props: RiskRegisterProps) => {
                   isInvalid={!!errors.impact_id}
                   errorMessage={errors.impact_id}
                   value={data.impact_id}
+                  defaultSelectedKeys={data.impact_id ? [data.impact_id] : []}
                   onChange={(e) => {
                     setData("impact_id", e.target.value);
                     if (errors.impact_id) {
@@ -480,6 +254,9 @@ const RiskEdit = (props: RiskRegisterProps) => {
                   isInvalid={!!errors.risk_source}
                   errorMessage={errors.risk_source}
                   value={data.risk_source}
+                  defaultSelectedKeys={
+                    data.risk_source ? [data.risk_source] : []
+                  }
                   onChange={(e) => {
                     setData("risk_source", e.target.value);
                     if (errors.risk_source) {

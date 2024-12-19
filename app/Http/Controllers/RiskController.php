@@ -106,15 +106,15 @@ class RiskController extends Controller
      */
     public function edit(string $id)
 {
-    // Cari risk berdasarkan ID, termasuk relasi yang dibutuhkan
-    // $risk = Risk::with([
-    //     'creator', 'updater', 'faculty', 'likelihood', 'impact'
-    // ])->find($id);
+    //Cari risk berdasarkan ID, termasuk relasi yang dibutuhkan
+    $risk = Risk::with([
+        'creator', 'faculty', 'updater', 'likelihood', 'impact'
+    ])->find($id);
 
-    // // Jika risk tidak ditemukan, kembalikan 404
-    // if (!$risk) {
-    //     abort(404);
-    // }
+    // Jika risk tidak ditemukan, kembalikan 404
+    if (!$risk) {
+        abort(404);
+    }
 
     // // Ambil ID pengguna yang sedang login
     // $userId = Auth::id();
@@ -164,12 +164,13 @@ class RiskController extends Controller
 
     $faculties = Faculty::where($where)->get();
     
-    return Inertia::render('RiskRegister/Index',[
+    return Inertia::render('Risks/Edit',[
+        'risks' => $risk,
         'options' => [
             'likelihoods' => $likelihood,
             'impacts' => $impact,
             'faculties' => $faculties,
-        ]
+        ],
     ]);
 }
 
